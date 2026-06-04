@@ -159,12 +159,14 @@ sudo npm install -g pm2
 ```js
 module.exports = {
   apps: [
-    { name: "exabar-web",       script: "npm", args: "run start", cwd: "/var/www/exabar", env: { PORT: 3001 } },
-    { name: "exabar-worker",    script: "npm", args: "run worker", cwd: "/var/www/exabar" },
-    { name: "exabar-scheduler", script: "npm", args: "run scheduler", cwd: "/var/www/exabar" },
+    { name: "exabar-web",    script: "npm", args: "run start", cwd: "/var/www/exabar", env: { PORT: 3001 } },
+    { name: "exabar-worker", script: "npm", args: "run worker", cwd: "/var/www/exabar" },
+    // scheduler PM2 daemon EMAS — bir martalik (npm run scheduler) repeatable joblarni Redis'ga yozadi.
   ],
 }
 ```
+
+> Scheduler daemon emas: deploy.sh uni `npm run scheduler` bilan bir marta ishga tushiradi (repeatable joblar Redis'da saqlanadi, worker bajaradi). Redis tozalansa qayta ishga tushiring.
 
 ```bash
 pm2 start ecosystem.config.js

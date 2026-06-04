@@ -43,6 +43,11 @@ else
 fi
 pm2 save
 
+echo "==> Rejali joblarni ro'yxatdan o'tkazish (bir martalik scheduler)"
+# scheduler daemon EMAS — repeatable joblarni Redis'ga yozib chiqadi.
+# Worker (PM2 daemon) ularni jadval bo'yicha bajaradi. Redis tozalansa qayta yozadi.
+npm run scheduler || echo "OGOH: scheduler ishlamadi (Redis tekshiring) — keyin qo'lda: npm run scheduler"
+
 # Nginx reverse-proxy portini app porti (3001) bilan moslash (mavjud bo'lsa).
 if command -v nginx >/dev/null 2>&1 && [ -f /etc/nginx/sites-available/exabar ]; then
   if ! grep -q "127.0.0.1:3001" /etc/nginx/sites-available/exabar; then

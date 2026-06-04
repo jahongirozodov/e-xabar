@@ -19,13 +19,8 @@ module.exports = {
       env: { NODE_ENV: "production" },
       autorestart: true,
     },
-    {
-      name: "exabar-scheduler",
-      script: "npm",
-      args: "run scheduler",
-      cwd: __dirname,
-      env: { NODE_ENV: "production" },
-      autorestart: true,
-    },
+    // Eslatma: scheduler PM2 daemon EMAS — u repeatable joblarni Redis'ga
+    // yozib chiqib ketadi (bir martalik). deploy.sh uni `npm run scheduler`
+    // bilan bir marta ishga tushiradi. Worker shu joblarni jadval bo'yicha bajaradi.
   ],
 }
