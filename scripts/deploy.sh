@@ -19,13 +19,11 @@ fi
 echo "==> Paketlar (legacy-peer-deps .npmrc'da)"
 npm install --no-audit --no-fund
 
-echo "==> Prisma generate + migratsiya"
+echo "==> Prisma generate + DB sxema sinxron (db push)"
 npx prisma generate
-if [ -d prisma/migrations ] && [ -n "$(ls -A prisma/migrations 2>/dev/null)" ]; then
-  npx prisma migrate deploy
-else
-  npx prisma db push --accept-data-loss
-fi
+# Loyiha db push workflow'idan foydalanadi (AGENTS.md). Migratsiyalar manba EMAS.
+# db push schema'ni DB'ga to'g'ridan moslaydi (yetishmayotgan unique/constraint qo'shadi).
+npx prisma db push
 
 if [ "${SEED:-0}" = "1" ]; then
   echo "==> Seed (faqat foydalanuvchilar)"
