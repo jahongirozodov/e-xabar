@@ -5,7 +5,7 @@ Ubuntu 22.04 / 24.04 LTS uchun. Stack: **Next.js 16 + Prisma 6 + PostgreSQL 16 +
 > Eslatma: Windows'dagi Redis 3.0/5.0 muammosi Ubuntu'da YO'Q — Redis 7 BullMQ bilan to'g'ridan ishlaydi.
 
 Arxitektura (3 jarayon):
-- **Web** — Next.js (`npm run start`, port 3000)
+- **Web** — Next.js (`npm run start`, port 3001)
 - **Worker** — skan/verify/ingest ishlovchisi (`npm run worker`)
 - **Scheduler** — takroriy joblar: skan yak 02:00, verify kunlik 03:00, ingest kunlik 01:00 (`npm run scheduler`)
 
@@ -159,7 +159,7 @@ sudo npm install -g pm2
 ```js
 module.exports = {
   apps: [
-    { name: "exabar-web",       script: "npm", args: "run start", cwd: "/var/www/exabar", env: { PORT: 3000 } },
+    { name: "exabar-web",       script: "npm", args: "run start", cwd: "/var/www/exabar", env: { PORT: 3001 } },
     { name: "exabar-worker",    script: "npm", args: "run worker", cwd: "/var/www/exabar" },
     { name: "exabar-scheduler", script: "npm", args: "run scheduler", cwd: "/var/www/exabar" },
   ],
@@ -191,7 +191,7 @@ server {
     client_max_body_size 20M;   # JSON import / fayl yuklash uchun
 
     location / {
-        proxy_pass http://127.0.0.1:3000;
+        proxy_pass http://127.0.0.1:3001;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';

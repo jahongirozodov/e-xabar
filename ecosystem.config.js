@@ -7,7 +7,7 @@ module.exports = {
       script: "npm",
       args: "run start",
       cwd: __dirname,
-      env: { NODE_ENV: "production", PORT: 3000 },
+      env: { NODE_ENV: "production", PORT: 3001 },
       max_restarts: 10,
       autorestart: true,
     },

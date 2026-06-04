@@ -45,5 +45,5 @@ fi
 pm2 status
 echo ""
 echo "================ DEPLOY TAYYOR ================"
-echo "Web: http://127.0.0.1:3000  (nginx orqasida)"
+echo "Web: http://127.0.0.1:3001  (nginx orqasida)"
 echo "Birinchi CVE yig'ish:  npm run ingest all   (yoki to'liq: npm run ingest:full)"
