@@ -39,10 +39,39 @@ apt install -y redis-server
 systemctl enable --now redis-server
 redis-cli ping
 
-echo "==> Nginx + Certbot"
+echo "==> Nginx"
 apt install -y nginx
-apt install -y certbot python3-certbot-nginx
 systemctl enable --now nginx
+
+# Reverse-proxy site config. Domen bo'lsa shu nom, bo'lmasa har qanday host/IP (_).
+SERVER_NAME="${DOMAIN:-_}"
+cat > /etc/nginx/sites-available/exabar <<NGINX
+server {
+    listen 80;
+    server_name ${SERVER_NAME};
+    client_max_body_size 20M;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+NGINX
+ln -sf /etc/nginx/sites-available/exabar /etc/nginx/sites-enabled/exabar
+rm -f /etc/nginx/sites-enabled/default
+nginx -t && systemctl reload nginx
+
+# Certbot (HTTPS) faqat real domen bo'lsa — local IP'da TLS sertifikat olinmaydi.
+if [ -n "$DOMAIN" ]; then
+  apt install -y certbot python3-certbot-nginx
+fi
 
 echo "==> PM2"
 npm install -g pm2
@@ -52,9 +81,18 @@ ufw allow OpenSSH
 ufw allow 'Nginx Full'
 yes | ufw enable || true
 
+LAN_IP="$(hostname -I | awk '{print $1}')"
 echo ""
 echo "================ TAYYOR ================"
 echo "DATABASE_URL=\"postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}?schema=public\""
 echo "Yuqoridagi qatorni loyiha .env fayliga yozing."
-[ -n "$DOMAIN" ] && echo "Keyin: certbot --nginx -d ${DOMAIN}"
+echo ""
+if [ -n "$DOMAIN" ]; then
+  echo ".env.local:  AUTH_URL=\"http://${DOMAIN}\"   AUTH_TRUST_HOST=\"true\""
+  echo "HTTPS uchun keyin:  sudo certbot --nginx -d ${DOMAIN}"
+else
+  echo "Domen yo'q (local VLAN). Kirish manzili:  http://${LAN_IP}"
+  echo ".env.local:  AUTH_URL=\"http://${LAN_IP}\"   AUTH_TRUST_HOST=\"true\""
+fi
+echo ""
 echo "Keyingi qadam: bash scripts/deploy.sh"
