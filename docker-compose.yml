@@ -1,0 +1,27 @@
+# Dev uchun Postgres + Redis namunasi (Roadmap §0.4).
+# ESLATMA: hozir lokal o'rnatilgan Postgres/Redis ishlatilmoqda, shuning uchun bu
+# fayl ixtiyoriy. Docker bilan ishlatish uchun: `docker compose up -d`.
+# Kredensiallar .env bilan mos bo'lishi kerak.
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: exabar
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    command: redis-server --appendonly yes
+
+volumes:
+  pgdata:
+  redisdata:

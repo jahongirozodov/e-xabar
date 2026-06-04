@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>e-Xabar — Boshqaruv paneli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="components.css">
+<link rel="stylesheet" href="app.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="boot.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#09090b">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#09090b"/>
+    <g transform="translate(600 360)" fill="none" stroke="#fafafa" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 -150 C 90 -88, 200 -60, 200 -60 L 200 30 C 200 180, 95 250, 6 295 a 12 12 0 0 1 -12 0 C -95 250, -200 180, -200 30 L -200 -60 C -200 -60, -90 -88, 0 -150 Z"/>
+      <path d="M -78 22 l 52 52 l 104 -104"/>
+    </g>
+    <text x="600" y="560" font-family="Geist, system-ui, sans-serif" font-size="80" font-weight="700" letter-spacing="-2" fill="#fafafa" text-anchor="middle">e-Xabar</text>
+    <text x="600" y="618" font-family="Geist, system-ui, sans-serif" font-size="34" fill="#a1a1aa" text-anchor="middle">Kiberxavfsizlik</text>
+  </svg>
+</template>
+<div id="root"></div>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="icons.jsx"></script>
+<script type="text/babel" src="primitives.jsx"></script>
+<script type="text/babel" src="charts.jsx"></script>
+<script type="text/babel" src="dashboard.jsx"></script>
+<script type="text/babel" src="findings.jsx"></script>
+<script type="text/babel" src="triage.jsx"></script>
+<script type="text/babel" src="assets.jsx"></script>
+<script type="text/babel" src="suppressions.jsx"></script>
+<script type="text/babel" src="scans.jsx"></script>
+<script type="text/babel" src="notifications.jsx"></script>
+<script type="text/babel" src="audit.jsx"></script>
+<script type="text/babel" src="cve.jsx"></script>
+<script type="text/babel" src="users.jsx"></script>
+<script type="text/babel" src="reports.jsx"></script>
+<script type="text/babel" src="settings.jsx"></script>
+<script type="text/babel" src="profile.jsx"></script>
+<script type="text/babel" src="Sidebar.jsx"></script>
+<script type="text/babel" src="Topbar.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+<script>window.__exaBoot(['Icon','Button','Card','Sidebar','Topbar','Dashboard','Findings','Triage','Assets','Suppressions','Scans','Notifications','Audit','Cve','Users','Reports','Settings','Profile','useTweaks','TweaksPanel','LineChart','DonutChart'], 12000);</script>
+</body>
+</html>

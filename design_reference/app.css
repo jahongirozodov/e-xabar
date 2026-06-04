@@ -1,0 +1,576 @@
+/* app.css — layout, navigation, menus, animations for the UI kit demo.
+   Requires ../../colors_and_type.css and ../../components.css */
+
+html, body { margin: 0; height: 100%; }
+/* Suppress all transitions during a theme switch so color/var() transitions
+   don't get stuck mid-interpolation (Chrome quirk with oklch + custom props). */
+.ds-no-transition * { transition: none !important; }
+body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); font-size: 14px; -webkit-font-smoothing: antialiased; }
+#root { height: 100%; }
+button { font-family: inherit; }
+
+/* ---- App shell ---- */
+.ds-app { display: flex; height: 100vh; overflow: hidden; }
+.ds-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.ds-content { flex: 1; overflow-y: auto; padding: 1.5rem 2rem 3rem; }
+.ds-content__head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+.ds-page-title { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.025em; margin: 0; }
+.ds-page-sub { font-size: 0.875rem; color: var(--muted-foreground); margin: 0.375rem 0 0; }
+.ds-stack { display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* ---- Sidebar ---- */
+.ds-sidebar {
+  width: 256px; flex: none; background: var(--sidebar); color: var(--sidebar-foreground);
+  border-right: 1px solid var(--sidebar-border); display: flex; flex-direction: column;
+  transition: width .2s ease;
+}
+.ds-sidebar--collapsed { width: 64px; }
+.ds-sidebar__brand { display: flex; align-items: center; gap: 0.625rem; padding: 0.75rem; margin: 0.25rem; border-radius: var(--radius-md); cursor: pointer; }
+.ds-sidebar__brand:hover { background: var(--sidebar-accent); }
+.ds-brand-mark { width: 32px; height: 32px; border-radius: var(--radius-md); background: var(--sidebar-primary); color: var(--sidebar-primary-foreground); display: grid; place-items: center; flex: none; }
+.ds-brand-text { flex: 1; min-width: 0; }
+.ds-brand-name { font-size: 0.875rem; font-weight: 600; line-height: 1.2; }
+.ds-brand-plan { font-size: 0.75rem; color: var(--muted-foreground); }
+.ds-brand-chev { color: var(--muted-foreground); }
+
+.ds-sidebar__nav { flex: 1; overflow-y: auto; padding: 0.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.ds-nav-group { display: flex; flex-direction: column; gap: 2px; }
+.ds-nav-group__label { font-size: 0.6875rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); padding: 0.5rem 0.625rem 0.25rem; }
+.ds-nav-item {
+  display: flex; align-items: center; gap: 0.625rem; width: 100%;
+  padding: 0.5rem 0.625rem; border: none; background: transparent; border-radius: var(--radius-md);
+  font-size: 0.875rem; font-weight: 500; color: var(--sidebar-foreground); cursor: pointer; text-align: left;
+  transition: background-color .12s, color .12s;
+}
+.ds-nav-item:hover { background: var(--sidebar-accent); }
+.ds-nav-item.is-active { background: var(--sidebar-accent); color: var(--sidebar-accent-foreground); font-weight: 600; }
+.ds-sidebar--collapsed .ds-nav-item { justify-content: center; padding: 0.5rem; }
+.ds-nav-item__badge { margin-left: auto; font-size: 0.6875rem; font-weight: 600; background: var(--primary); color: var(--primary-foreground); border-radius: 999px; min-width: 18px; height: 18px; display: grid; place-items: center; padding: 0 5px; }
+.ds-sidebar__footer { padding: 0.5rem; border-top: 1px solid var(--sidebar-border); }
+.ds-user { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.ds-user__name { font-size: 0.8125rem; font-weight: 600; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ds-user__mail { font-size: 0.6875rem; color: var(--muted-foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- Topbar ---- */
+.ds-topbar { height: 56px; flex: none; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 0.75rem 0 0.5rem; gap: 1rem; background: color-mix(in oklab, var(--background) 80%, transparent); backdrop-filter: blur(8px); position: sticky; top: 0; z-index: 20; }
+.ds-topbar__left, .ds-topbar__right { display: flex; align-items: center; gap: 0.5rem; }
+.ds-divider-v { width: 1px; height: 20px; background: var(--border); margin: 0 0.25rem; }
+.ds-breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; }
+.ds-breadcrumb__muted { color: var(--muted-foreground); }
+.ds-search { display: flex; align-items: center; gap: 0.5rem; height: 36px; padding: 0 0.625rem; border: 1px solid var(--input); border-radius: var(--radius-md); background: var(--background); width: 240px; box-shadow: var(--shadow-xs); }
+.ds-search input { border: none; outline: none; background: transparent; font-family: inherit; font-size: 0.875rem; color: var(--foreground); flex: 1; min-width: 0; }
+.ds-search input::placeholder { color: var(--muted-foreground); }
+.ds-search--inline { width: 280px; }
+.ds-avatar-btn { border: none; background: transparent; cursor: pointer; padding: 2px; border-radius: 999px; }
+.ds-notif-dot { position: absolute; top: 8px; right: 9px; width: 7px; height: 7px; border-radius: 999px; background: var(--destructive); border: 1.5px solid var(--background); }
+
+/* ---- Menus / dropdowns ---- */
+.ds-menu { position: absolute; top: calc(100% + 6px); min-width: 220px; background: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 0.25rem; z-index: 40; }
+.ds-menu__item { display: flex; align-items: center; gap: 0.5rem; width: 100%; padding: 0.4375rem 0.5rem; border: none; background: transparent; border-radius: var(--radius-sm); font-size: 0.8125rem; color: var(--popover-foreground); cursor: pointer; text-align: left; }
+.ds-menu__item:hover { background: var(--accent); }
+.ds-menu__item--danger { color: var(--destructive); }
+.ds-menu__item--danger:hover { background: color-mix(in oklab, var(--destructive) 12%, transparent); }
+.ds-menu__label { font-size: 0.75rem; font-weight: 600; color: var(--muted-foreground); padding: 0.5rem; }
+.ds-menu__userhead { padding: 0.5rem; }
+.ds-sep-line { height: 1px; background: var(--border); margin: 0.25rem 0; }
+
+/* ---- Stats ---- */
+.ds-grid-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.ds-stat-top { display: flex; justify-content: space-between; align-items: center; }
+.ds-stat-label { font-size: 0.8125rem; font-weight: 500; color: var(--muted-foreground); }
+.ds-stat-value { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin: 0.5rem 0 0.25rem; }
+.ds-stat-delta { font-size: 0.75rem; color: var(--muted-foreground); display: flex; align-items: center; gap: 0.25rem; }
+.ds-stat-delta .lucide-icon { color: oklch(0.6 0.13 155); }
+
+/* ---- Two-col + chart ---- */
+.ds-grid-2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1rem; }
+.ds-chart { display: flex; align-items: flex-end; gap: 0.5rem; height: 200px; padding-top: 0.5rem; }
+.ds-chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; height: 100%; justify-content: flex-end; }
+.ds-chart-bar { width: 100%; max-width: 28px; background: var(--primary); border-radius: var(--radius-sm) var(--radius-sm) 0 0; transition: height .3s ease; }
+.ds-chart-x { font-size: 0.625rem; color: var(--muted-foreground); }
+
+.ds-sale-list { display: flex; flex-direction: column; gap: 1rem; }
+.ds-sale { display: flex; align-items: center; gap: 0.75rem; }
+.ds-sale__who { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ds-sale__name { font-size: 0.8125rem; font-weight: 600; }
+.ds-sale__mail { font-size: 0.75rem; color: var(--muted-foreground); }
+.ds-sale__amt { font-size: 0.8125rem; font-weight: 600; font-family: var(--font-mono); }
+
+/* ---- Toolbar + table cells ---- */
+.ds-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.ds-toolbar__right { display: flex; gap: 0.5rem; }
+.ds-cell-user { display: flex; align-items: center; gap: 0.625rem; }
+.ds-cell-name { font-weight: 500; }
+.ds-cell-mail { font-size: 0.75rem; color: var(--muted-foreground); }
+.ds-table-foot { font-size: 0.8125rem; color: var(--muted-foreground); }
+
+/* ---- Forms ---- */
+.ds-form-grid { display: grid; gap: 1rem; }
+.ds-form-grid--2 { grid-template-columns: 1fr 1fr; }
+.ds-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 0; }
+.ds-toggle-title { font-size: 0.875rem; font-weight: 500; }
+.ds-toggle-desc { font-size: 0.8125rem; color: var(--muted-foreground); }
+
+/* ---- Toasts ---- */
+.ds-toast-wrap { position: fixed; bottom: 1.25rem; right: 1.25rem; display: flex; flex-direction: column; gap: 0.625rem; z-index: 60; }
+
+/* ---- Animations ---- */
+@keyframes ds-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ds-pop { from { opacity: 0; transform: scale(0.96) translateY(4px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes ds-slide-in { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+.ds-anim-overlay { animation: ds-fade .15s ease; }
+.ds-anim-dialog { animation: ds-pop .18s cubic-bezier(.16,1,.3,1); }
+.ds-anim-menu { animation: ds-pop .12s ease; transform-origin: top; }
+.ds-anim-toast { animation: ds-slide-in .2s cubic-bezier(.16,1,.3,1); }
+
+/* ---- Density: compact ---- */
+.density-compact .ds-content { padding: 1rem 1.5rem 2.5rem; }
+.density-compact .ds-stack { gap: 0.875rem; }
+.density-compact .ui-card__header { padding: 1rem; }
+.density-compact .ui-card__content { padding: 0 1rem 1rem; }
+.density-compact .ui-card__footer { padding: 0 1rem 1rem; }
+.density-compact .ui-table thead th { height: 2.25rem; }
+.density-compact .ui-table tbody td { padding: 0.5rem 1rem; }
+.density-compact .ds-page-title { font-size: 1.5rem; }
+.density-compact .ds-stat-value { font-size: 1.5rem; }
+.density-compact .ds-content__head { margin-bottom: 1rem; }
+
+/* ============================================================================
+   e-Xabar — severity tokens + dashboard components
+   ============================================================================ */
+:root {
+  --sev-c: oklch(0.58 0.22 25);
+  --sev-h: oklch(0.66 0.17 52);
+  --sev-m: oklch(0.76 0.14 82);
+  --sev-l: oklch(0.60 0.12 230);
+  --kev:   oklch(0.55 0.24 300);
+}
+.dark {
+  --sev-c: oklch(0.68 0.20 25);
+  --sev-h: oklch(0.75 0.16 58);
+  --sev-m: oklch(0.83 0.15 86);
+  --sev-l: oklch(0.71 0.13 232);
+  --kev:   oklch(0.67 0.24 300);
+}
+
+/* sidebar warning badge (triage queue) */
+.ds-nav-item__badge--warning { background: color-mix(in oklab, var(--sev-h) 88%, black 0%); color: oklch(0.18 0.02 60); }
+
+/* ---- Toolbar / segmented control ---- */
+.exa-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.exa-toolbar__right { display: flex; gap: 0.5rem; }
+.exa-seg { display: inline-flex; background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 3px; gap: 2px; }
+.exa-seg__btn { border: none; background: transparent; padding: 0.3125rem 0.75rem; border-radius: calc(var(--radius-md) - 3px); font-size: 0.8125rem; font-weight: 500; color: var(--muted-foreground); cursor: pointer; transition: background .12s, color .12s; }
+.exa-seg__btn:hover { color: var(--foreground); }
+.exa-seg__btn.is-active { background: var(--background); color: var(--foreground); box-shadow: var(--shadow-xs); font-weight: 600; }
+
+/* ---- KPI cards ---- */
+.exa-kpi-ico { display: inline-flex; width: 32px; height: 32px; align-items: center; justify-content: center; border-radius: var(--radius-md); background: var(--muted); color: var(--muted-foreground); }
+.exa-kpi-foot { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.125rem; }
+.exa-kpi-sub { font-size: 0.75rem; color: var(--muted-foreground); }
+.exa-trend { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; font-weight: 600; padding: 1px 6px 1px 4px; border-radius: 999px; }
+.exa-trend--bad { color: var(--sev-c); background: color-mix(in oklab, var(--sev-c) 14%, transparent); }
+.exa-trend--good { color: oklch(0.62 0.15 155); background: color-mix(in oklab, oklch(0.62 0.15 155) 14%, transparent); }
+.exa-trend--neutral { color: var(--muted-foreground); background: var(--muted); }
+.exa-kpi-foot .exa-trend .lucide-icon { color: inherit; }
+
+/* ---- Charts ---- */
+.exa-chart { width: 100%; }
+.exa-axis { fill: var(--muted-foreground); font-size: 10px; font-family: var(--font-sans); }
+.exa-tip { position: absolute; transform: translateX(-50%); background: var(--popover); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 0.5rem 0.625rem; min-width: 140px; pointer-events: none; z-index: 5; }
+.exa-tip__head { font-size: 0.6875rem; font-weight: 600; color: var(--muted-foreground); margin-bottom: 0.375rem; }
+.exa-tip__row { display: flex; align-items: center; gap: 0.4375rem; font-size: 0.75rem; }
+.exa-tip__row + .exa-tip__row { margin-top: 2px; }
+.exa-tip__dot { width: 8px; height: 8px; border-radius: 999px; flex: none; }
+.exa-tip__name { color: var(--muted-foreground); }
+.exa-tip__val { margin-left: auto; font-weight: 600; font-family: var(--font-mono); }
+.exa-legend { display: flex; gap: 1.25rem; margin-top: 0.75rem; padding-left: 40px; }
+.exa-legend__item { display: flex; align-items: center; gap: 0.4375rem; font-size: 0.75rem; color: var(--muted-foreground); }
+.exa-legend__sw { width: 12px; height: 3px; border-radius: 2px; }
+
+/* ---- Donut ---- */
+.exa-donut { display: flex; align-items: center; gap: 1.5rem; padding: 0.5rem 0; }
+.exa-donut__ring { position: relative; flex: none; }
+.exa-donut__center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.exa-donut__num { font-size: 1.625rem; font-weight: 700; letter-spacing: -0.02em; }
+.exa-donut__lbl { font-size: 0.6875rem; color: var(--muted-foreground); margin-top: 1px; }
+.exa-donut__legend { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.exa-donut__row { display: flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.5rem; border-radius: var(--radius-sm); cursor: default; transition: background .12s; }
+.exa-donut__row.is-active { background: var(--accent); }
+.exa-donut__sw { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+.exa-donut__name { font-size: 0.8125rem; font-weight: 500; }
+.exa-donut__pct { margin-left: auto; font-size: 0.75rem; color: var(--muted-foreground); font-family: var(--font-mono); }
+.exa-donut__cnt { width: 34px; text-align: right; font-size: 0.8125rem; font-weight: 600; font-family: var(--font-mono); }
+
+/* ---- Card head (for padding:0 table cards) ---- */
+.exa-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.5rem 0.875rem; }
+
+/* ---- TOP-10 table ---- */
+.exa-table { font-size: 0.8125rem; }
+.exa-table thead th { font-size: 0.6875rem; }
+.exa-rank { color: var(--muted-foreground); font-family: var(--font-mono); font-size: 0.75rem; }
+.exa-asset { display: flex; align-items: center; gap: 0.625rem; }
+.exa-asset__ico { display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--muted); color: var(--muted-foreground); flex: none; }
+.exa-asset__name { font-weight: 600; display: flex; align-items: center; gap: 0.4375rem; }
+.exa-asset__ver { font-weight: 500; color: var(--muted-foreground); font-family: var(--font-mono); font-size: 0.75rem; }
+.exa-asset__host { font-size: 0.6875rem; color: var(--muted-foreground); font-family: var(--font-mono); margin-top: 1px; }
+.exa-kev { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.04em; color: var(--kev); background: color-mix(in oklab, var(--kev) 16%, transparent); padding: 1px 5px; border-radius: 999px; }
+.exa-plat { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted-foreground); }
+.exa-find { display: flex; align-items: center; gap: 0.5rem; }
+.exa-sev-dot { width: 8px; height: 8px; border-radius: 999px; flex: none; }
+.exa-find__cnt { font-weight: 600; font-family: var(--font-mono); width: 18px; }
+.exa-sevbar { display: flex; height: 6px; flex: 1; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 1px; max-width: 84px; }
+.exa-cvss { text-align: right; font-family: var(--font-mono); font-weight: 700; font-size: 0.8125rem; }
+
+/* ---- Activity feed ---- */
+.exa-feed { padding: 0.25rem 0.5rem 0.75rem; }
+.exa-feed__item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6875rem 1rem; border-radius: var(--radius-md); }
+.exa-feed__item:hover { background: var(--accent); }
+.exa-feed__ico { display: inline-flex; width: 30px; height: 30px; align-items: center; justify-content: center; border-radius: 999px; flex: none; background: var(--muted); color: var(--muted-foreground); }
+.exa-feed__ico--crit { background: color-mix(in oklab, var(--sev-c) 16%, transparent); color: var(--sev-c); }
+.exa-feed__ico--good { background: color-mix(in oklab, oklch(0.62 0.15 155) 16%, transparent); color: oklch(0.62 0.15 155); }
+.exa-feed__body { flex: 1; min-width: 0; }
+.exa-feed__title { font-size: 0.8125rem; font-weight: 500; line-height: 1.3; }
+.exa-feed__meta { font-size: 0.75rem; color: var(--muted-foreground); margin-top: 1px; }
+.exa-feed__time { font-size: 0.6875rem; color: var(--muted-foreground); white-space: nowrap; flex: none; padding-top: 1px; }
+
+/* ---- Responsive ---- */
+@media (max-width: 1000px) {
+  .ds-grid-stats { grid-template-columns: repeat(2, 1fr); }
+  .ds-grid-2 { grid-template-columns: 1fr; }
+  .ds-search { width: 160px; }
+  .exa-donut { justify-content: center; }
+}
+@media (max-width: 680px) {
+  .ds-sidebar { position: absolute; z-index: 50; height: 100%; box-shadow: var(--shadow-lg); }
+  .ds-content { padding: 1rem; }
+  .ds-grid-stats { grid-template-columns: 1fr 1fr; }
+  .ds-search, .ds-breadcrumb__muted { display: none; }
+}
+
+/* ============================================================================
+   e-Xabar — Topilmalar (findings) ekrani
+   ============================================================================ */
+/* severity tag */
+.exa-sevtag { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.6875rem; font-weight: 600; padding: 2px 8px 2px 6px; border-radius: 999px; white-space: nowrap; }
+.exa-sevtag__dot { width: 6px; height: 6px; border-radius: 999px; }
+
+/* status badge tones */
+.exa-status { display: inline-flex; align-items: center; font-size: 0.6875rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.exa-status--new  { color: var(--sev-l); background: color-mix(in oklab, var(--sev-l) 14%, transparent); }
+.exa-status--warn { color: var(--sev-h); background: color-mix(in oklab, var(--sev-h) 16%, transparent); }
+.exa-status--crit { color: var(--sev-c); background: color-mix(in oklab, var(--sev-c) 14%, transparent); }
+.exa-status--info { color: var(--kev); background: color-mix(in oklab, var(--kev) 14%, transparent); }
+.exa-status--ok   { color: oklch(0.64 0.15 155); background: color-mix(in oklab, oklch(0.64 0.15 155) 16%, transparent); }
+.exa-status--mute { color: var(--muted-foreground); background: var(--muted); }
+
+/* profile avatar */
+.exa-prof-avatar { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; flex: none; border-radius: 999px; background: var(--muted); color: var(--foreground); font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; border: 1px solid var(--border); }
+
+/* source tags */
+.exa-srcs { display: inline-flex; gap: 3px; flex-wrap: wrap; }
+.exa-src { font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.02em; color: var(--muted-foreground); background: var(--muted); border: 1px solid var(--border); padding: 0 4px; border-radius: 4px; line-height: 1.5; }
+.exa-src--kev { color: var(--kev); background: color-mix(in oklab, var(--kev) 14%, transparent); border-color: color-mix(in oklab, var(--kev) 30%, transparent); }
+
+/* confidence meter */
+.exa-conf { display: flex; align-items: center; gap: 0.5rem; }
+.exa-conf__track { flex: 1; height: 6px; background: var(--muted); border-radius: 999px; overflow: hidden; min-width: 56px; }
+.exa-conf__fill { display: block; height: 100%; border-radius: 999px; }
+.exa-conf__fill--ok { background: oklch(0.64 0.15 155); }
+.exa-conf__fill--warn { background: var(--sev-h); }
+.exa-conf__fill--low { background: var(--sev-c); }
+.exa-conf__pct { font-size: 0.6875rem; font-family: var(--font-mono); color: var(--muted-foreground); width: 30px; text-align: right; }
+.exa-conf--lg .exa-conf__track { height: 8px; }
+
+/* sortable header */
+.exa-sorth { display: inline-flex; align-items: center; gap: 0.25rem; }
+.exa-sorth__ic { opacity: 0; transition: opacity .12s, transform .12s; }
+th:hover .exa-sorth__ic { opacity: 0.4; }
+.exa-sorth__ic.is-active { opacity: 1; color: var(--foreground); }
+.exa-sorth__ic.is-asc { transform: rotate(180deg); }
+
+/* filter bar */
+.exa-filterbar { display: flex; align-items: center; gap: 0.4375rem; flex-wrap: wrap; }
+.exa-filterbar__lbl { font-size: 0.75rem; font-weight: 500; color: var(--muted-foreground); margin-right: 0.125rem; }
+.exa-filterbar__sep { width: 1px; height: 18px; background: var(--border); margin: 0 0.25rem; }
+.exa-chip { display: inline-flex; align-items: center; gap: 0.375rem; height: 30px; padding: 0 0.625rem; border: 1px solid var(--border); background: var(--card); border-radius: 999px; font-size: 0.75rem; font-weight: 500; color: var(--foreground); cursor: pointer; transition: background .12s, border-color .12s, color .12s; }
+.exa-chip:hover { background: var(--accent); }
+.exa-chip.is-active { font-weight: 600; }
+.exa-chip__dot { width: 7px; height: 7px; border-radius: 999px; }
+.exa-chip--kev.is-active { color: var(--kev); border-color: color-mix(in oklab, var(--kev) 40%, transparent); background: color-mix(in oklab, var(--kev) 14%, transparent); }
+.exa-clear { display: inline-flex; align-items: center; gap: 0.25rem; border: none; background: transparent; color: var(--muted-foreground); font-size: 0.75rem; cursor: pointer; padding: 0 0.5rem; }
+.exa-clear:hover { color: var(--foreground); }
+.exa-check { display: inline-flex; width: 14px; justify-content: center; color: var(--foreground); }
+
+/* findings table */
+.exa-ftable tbody td { vertical-align: middle; }
+.exa-frow { cursor: pointer; }
+.exa-frow.is-sel { background: var(--accent); }
+.exa-cve { display: flex; flex-direction: column; gap: 3px; }
+.exa-cve__id { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4375rem; }
+.exa-cve__title { font-size: 0.8125rem; font-weight: 500; color: var(--foreground); }
+.exa-fasset { display: flex; flex-direction: column; gap: 1px; }
+.exa-fasset__n { font-size: 0.8125rem; font-weight: 500; }
+.exa-fasset__h { font-size: 0.6875rem; color: var(--muted-foreground); font-family: var(--font-mono); }
+
+/* bulk action bar */
+.exa-bulk { position: absolute; top: 0; left: 0; right: 0; z-index: 6; height: 52px; display: flex; align-items: center; gap: 1rem; padding: 0 1rem; background: color-mix(in oklab, var(--primary) 10%, var(--card)); border-bottom: 1px solid var(--border); animation: ds-fade .12s ease; }
+.exa-bulk__count { font-size: 0.8125rem; }
+.exa-bulk__actions { display: flex; gap: 0.4375rem; }
+.exa-bulk__x { margin-left: auto; border: none; background: transparent; color: var(--muted-foreground); cursor: pointer; display: inline-flex; padding: 4px; border-radius: var(--radius-sm); }
+.exa-bulk__x:hover { background: var(--accent); color: var(--foreground); }
+
+/* ---- detail drawer ---- */
+.exa-drawer-overlay { position: fixed; inset: 0; background: color-mix(in oklab, black 45%, transparent); z-index: 70; display: flex; justify-content: flex-end; animation: ds-fade .15s ease; }
+.exa-drawer { width: 460px; max-width: 92vw; height: 100%; background: var(--card); border-left: 1px solid var(--border); box-shadow: var(--shadow-xl); display: flex; flex-direction: column; animation: exa-slide-l .22s cubic-bezier(.16,1,.3,1); }
+@keyframes exa-slide-l { from { transform: translateX(24px); opacity: 0.4; } to { transform: translateX(0); opacity: 1; } }
+.exa-drawer__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.25rem 0.75rem; }
+.exa-drawer__cve { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+.exa-drawer__title { font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; margin-top: 4px; line-height: 1.3; }
+.exa-drawer__sub { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; padding: 0 1.25rem 1rem; border-bottom: 1px solid var(--border); }
+.exa-drawer__body { flex: 1; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; }
+.exa-drawer__foot { display: flex; gap: 0.5rem; padding: 0.875rem 1.25rem; border-top: 1px solid var(--border); background: var(--card); }
+.exa-drawer__foot .ui-btn { flex: 1; }
+
+.exa-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+.exa-metric { background: var(--muted); border-radius: var(--radius-md); padding: 0.625rem 0.5rem; text-align: center; }
+.exa-metric__k { font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-foreground); }
+.exa-metric__v { font-size: 1.125rem; font-weight: 700; font-family: var(--font-mono); margin-top: 2px; }
+
+.exa-sec__t { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-foreground); margin-bottom: 0.625rem; display: flex; align-items: center; gap: 0.5rem; }
+.exa-sec__badge { text-transform: none; letter-spacing: 0; font-family: var(--font-mono); color: var(--foreground); background: var(--muted); padding: 1px 7px; border-radius: 999px; font-size: 0.6875rem; }
+.exa-desc { font-size: 0.8125rem; line-height: 1.55; color: var(--foreground); margin: 0 0 0.625rem; text-wrap: pretty; }
+.exa-vector { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted-foreground); background: var(--muted); padding: 0.4375rem 0.625rem; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 0.4375rem; word-break: break-all; }
+.exa-meta-line { font-size: 0.75rem; color: var(--muted-foreground); margin-top: 0.5rem; }
+.exa-kv { display: flex; flex-direction: column; }
+.exa-kv__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.4375rem 0; font-size: 0.8125rem; border-bottom: 1px solid var(--border); }
+.exa-kv__row:last-child { border-bottom: none; }
+.exa-kv__row span { color: var(--muted-foreground); }
+.exa-owner { display: flex; align-items: center; gap: 0.75rem; background: var(--muted); padding: 0.75rem; border-radius: var(--radius-md); }
+.exa-owner__n { font-size: 0.8125rem; font-weight: 600; }
+.exa-owner__m { font-size: 0.6875rem; color: var(--muted-foreground); margin-top: 1px; }
+.exa-factors { display: flex; flex-direction: column; gap: 0.4375rem; margin-top: 0.75rem; }
+.exa-factor { display: flex; align-items: center; gap: 0.625rem; font-size: 0.75rem; }
+.exa-factor__w { font-family: var(--font-mono); font-weight: 600; width: 30px; text-align: right; color: oklch(0.64 0.15 155); flex: none; }
+.exa-factor__w.is-neg { color: var(--sev-c); }
+.exa-factor__n { color: var(--muted-foreground); }
+
+@media (max-width: 1000px) {
+  .exa-ftable .exa-fasset__h { display: none; }
+}
+
+/* ============================================================================
+   e-Xabar — Triage kanban doskasi
+   ============================================================================ */
+.exa-tri-hint { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; color: var(--muted-foreground); }
+.exa-board { display: grid; grid-template-columns: repeat(5, minmax(220px, 1fr)); gap: 0.875rem; align-items: start; overflow-x: auto; padding-bottom: 0.5rem; }
+.exa-col { background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.75rem; display: flex; flex-direction: column; min-height: 200px; transition: background .12s, border-color .12s, box-shadow .12s; }
+.exa-col.is-over { border-color: color-mix(in oklab, var(--primary) 50%, var(--border)); background: color-mix(in oklab, var(--primary) 7%, var(--muted)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 22%, transparent); }
+.exa-col__head { display: flex; align-items: center; gap: 0.5rem; }
+.exa-col__dot { width: 8px; height: 8px; border-radius: 999px; flex: none; }
+.exa-col__label { font-size: 0.8125rem; font-weight: 600; }
+.exa-col__count { margin-left: auto; font-size: 0.6875rem; font-weight: 600; font-family: var(--font-mono); color: var(--muted-foreground); background: var(--background); border: 1px solid var(--border); min-width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; padding: 0 5px; border-radius: 999px; }
+.exa-col__hint { font-size: 0.6875rem; color: var(--muted-foreground); margin: 0.25rem 0 0.625rem; }
+.exa-col__body { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.exa-col__empty { text-align: center; font-size: 0.75rem; color: var(--muted-foreground); padding: 1.25rem 0; border: 1px dashed var(--border); border-radius: var(--radius-md); }
+
+.exa-tcard { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.625rem 0.6875rem; cursor: grab; box-shadow: var(--shadow-xs); transition: box-shadow .12s, border-color .12s, transform .08s; }
+.exa-tcard:hover { border-color: color-mix(in oklab, var(--foreground) 18%, var(--border)); box-shadow: var(--shadow-sm); }
+.exa-tcard:active { cursor: grabbing; }
+.exa-tcard.is-dragging { opacity: 0.5; }
+.exa-tcard__top { display: flex; align-items: center; gap: 0.4375rem; }
+.exa-tcard__cve { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; color: var(--muted-foreground); }
+.exa-tcard__title { font-size: 0.8125rem; font-weight: 600; line-height: 1.3; margin: 0.25rem 0 0.4375rem; text-wrap: pretty; }
+.exa-tcard__asset { display: flex; align-items: center; gap: 0.3125rem; font-size: 0.6875rem; color: var(--muted-foreground); margin-bottom: 0.5rem; }
+.exa-tcard__asset .exa-asset__ver { font-size: 0.6875rem; }
+.exa-tcard__conf { margin-bottom: 0.5rem; }
+.exa-tcard__foot { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.exa-tcard__meta { display: flex; align-items: center; gap: 0.4375rem; }
+.exa-tcard__owner { width: 22px; height: 22px; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground); font-size: 0.625rem; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.exa-tcard__age { font-size: 0.625rem; color: var(--muted-foreground); font-family: var(--font-mono); }
+
+@media (max-width: 1000px) {
+  .exa-ftable .exa-fasset__h { display: none; }
+  .exa-board { grid-auto-columns: 240px; grid-template-columns: none; grid-auto-flow: column; }
+}
+
+/* ============================================================================
+   e-Xabar — Vositalar (assets) ekrani
+   ============================================================================ */
+.exa-net-dot { display: inline-block; width: 6px; height: 6px; border-radius: 999px; background: var(--kev); margin-left: 2px; vertical-align: middle; }
+.exa-typetag { font-size: 0.6875rem; font-weight: 600; color: var(--foreground); background: var(--muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: var(--radius-sm); white-space: nowrap; }
+.exa-env { font-size: 0.6875rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.exa-env--prod { color: oklch(0.64 0.15 155); background: color-mix(in oklab, oklch(0.64 0.15 155) 15%, transparent); }
+.exa-env--stg { color: var(--sev-h); background: color-mix(in oklab, var(--sev-h) 16%, transparent); }
+.exa-env--dev { color: var(--sev-l); background: color-mix(in oklab, var(--sev-l) 15%, transparent); }
+.exa-critbadge { display: inline-flex; align-items: center; gap: 0.4375rem; font-size: 0.75rem; font-weight: 500; white-space: nowrap; }
+.exa-clean { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; font-weight: 500; color: oklch(0.64 0.15 155); }
+.exa-net { display: inline-flex; align-items: center; gap: 0.3125rem; font-size: 0.6875rem; font-weight: 600; color: var(--kev); background: color-mix(in oklab, var(--kev) 14%, transparent); padding: 2px 8px; border-radius: 999px; }
+.exa-cell-owner { display: inline-flex; align-items: center; gap: 0.5rem; }
+.exa-cell-owner__n { font-size: 0.8125rem; }
+
+/* identifier code blocks in drawer */
+.exa-idblock { margin-top: 0.625rem; }
+.exa-idblock__k { font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-foreground); margin-bottom: 3px; }
+.exa-idblock__v { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--foreground); background: var(--muted); padding: 0.4375rem 0.625rem; border-radius: var(--radius-sm); word-break: break-all; line-height: 1.5; }
+
+/* related findings list in drawer */
+.exa-findlist { display: flex; flex-direction: column; gap: 1px; }
+.exa-findlist__row { display: flex; align-items: center; gap: 0.625rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+.exa-findlist__row:last-child { border-bottom: none; }
+.exa-findlist__main { flex: 1; min-width: 0; }
+.exa-findlist__cve { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; display: flex; align-items: center; gap: 0.4375rem; }
+.exa-findlist__t { font-size: 0.75rem; color: var(--muted-foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@media (max-width: 1100px) {
+  .exa-cell-owner__n { display: none; }
+}
+
+/* ============================================================================
+   e-Xabar — Bostirishlar (suppressions) ekrani
+   ============================================================================ */
+.exa-supstats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.exa-supstat { display: flex; align-items: center; gap: 0.875rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 1rem 1.25rem; box-shadow: var(--shadow-sm); }
+.exa-supstat__ico { display: inline-flex; width: 38px; height: 38px; align-items: center; justify-content: center; border-radius: var(--radius-md); background: var(--muted); color: var(--muted-foreground); flex: none; }
+.exa-supstat__ico--warn { color: var(--sev-h); background: color-mix(in oklab, var(--sev-h) 15%, transparent); }
+.exa-supstat__v { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.exa-supstat__l { font-size: 0.75rem; color: var(--muted-foreground); margin-top: 4px; }
+
+.exa-scope { display: flex; align-items: center; gap: 0.625rem; }
+.exa-scope__ico { display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--muted); color: var(--muted-foreground); flex: none; }
+.exa-scope__target { font-size: 0.8125rem; font-weight: 600; font-family: var(--font-mono); }
+.exa-scope__label { font-size: 0.6875rem; color: var(--muted-foreground); margin-top: 1px; }
+.exa-reason { font-size: 0.8125rem; color: var(--muted-foreground); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-width: 320px; text-wrap: pretty; }
+.exa-exp-sub { font-size: 0.6875rem; color: var(--muted-foreground); font-family: var(--font-mono); margin-top: 3px; }
+.exa-row-off { opacity: 0.5; }
+.exa-row-off:hover { opacity: 0.7; }
+
+@media (max-width: 1000px) {
+  .exa-supstats { grid-template-columns: 1fr; }
+}
+
+/* ============================================================================
+   e-Xabar — Hisobotlar + Sozlamalar
+   ============================================================================ */
+@keyframes exa-spin { to { transform: rotate(360deg); } }
+.exa-spin { animation: exa-spin 0.8s linear infinite; }
+
+.exa-rsum { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.exa-rsum__item { display: flex; align-items: center; gap: 0.75rem; background: var(--muted); border-radius: var(--radius-md); padding: 0.75rem 0.875rem; }
+.exa-rsum__ico { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--border); color: var(--muted-foreground); flex: none; }
+.exa-rsum__v { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.exa-rsum__k { font-size: 0.75rem; color: var(--muted-foreground); margin-top: 3px; }
+
+.exa-enc { display: inline-flex; align-items: center; gap: 0.4375rem; font-size: 0.8125rem; color: oklch(0.64 0.15 155); background: color-mix(in oklab, oklch(0.64 0.15 155) 12%, transparent); padding: 0.4375rem 0.75rem; border-radius: var(--radius-md); }
+
+/* ============================================================================
+   e-Xabar — Login + 2FA
+   ============================================================================ */
+.lg-wrap { display: grid; grid-template-columns: 1.05fr 1fr; min-height: 100vh; }
+.lg-brand { position: relative; background: var(--sidebar); color: var(--sidebar-foreground); border-right: 1px solid var(--sidebar-border); display: flex; flex-direction: column; justify-content: space-between; padding: 2.5rem; overflow: hidden; }
+.lg-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--sidebar-border) 1px, transparent 1px), linear-gradient(90deg, var(--sidebar-border) 1px, transparent 1px); background-size: 36px 36px; opacity: 0.4; mask-image: radial-gradient(ellipse 80% 70% at 70% 30%, black, transparent 75%); pointer-events: none; }
+.lg-brand > *:not(.lg-grid) { position: relative; z-index: 1; }
+.lg-logo { display: flex; align-items: center; gap: 0.625rem; }
+.lg-logo__name { font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em; }
+.lg-brand__mid { max-width: 420px; }
+.lg-tagline { font-size: 1.875rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin: 0 0 1rem; text-wrap: balance; }
+.lg-sub { font-size: 0.9375rem; color: var(--muted-foreground); line-height: 1.6; margin: 0 0 2rem; }
+.lg-feats { display: flex; flex-direction: column; gap: 0.875rem; }
+.lg-feat { display: flex; align-items: center; gap: 0.625rem; font-size: 0.875rem; font-weight: 500; }
+.lg-feat .lucide-icon { color: var(--sidebar-primary); }
+.lg-brand__foot { font-size: 0.75rem; color: var(--muted-foreground); }
+
+.lg-formwrap { display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--background); }
+.lg-card { width: 100%; max-width: 360px; }
+.lg-logo--m { display: none; justify-content: center; margin-bottom: 2rem; }
+.lg-form { display: flex; flex-direction: column; gap: 1.125rem; }
+.lg-head h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 0.375rem; }
+.lg-head p { font-size: 0.875rem; color: var(--muted-foreground); margin: 0; line-height: 1.5; }
+.lg-pwlabel { display: flex; justify-content: space-between; align-items: center; }
+.lg-pwlabel a { font-size: 0.75rem; font-weight: 500; color: var(--muted-foreground); text-decoration: none; }
+.lg-pwlabel a:hover { color: var(--foreground); text-decoration: underline; }
+.lg-err { display: flex; align-items: center; gap: 0.4375rem; font-size: 0.8125rem; color: var(--destructive); background: color-mix(in oklab, var(--destructive) 12%, transparent); padding: 0.5rem 0.625rem; border-radius: var(--radius-md); }
+.lg-demo { display: flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; color: var(--muted-foreground); justify-content: center; }
+.lg-demo code { font-family: var(--font-mono); background: var(--muted); padding: 1px 5px; border-radius: 4px; font-size: 0.6875rem; }
+.lg-back { display: inline-flex; align-items: center; gap: 0.25rem; align-self: flex-start; border: none; background: transparent; color: var(--muted-foreground); font-size: 0.8125rem; cursor: pointer; padding: 0; }
+.lg-back:hover { color: var(--foreground); }
+.lg-otpico { display: inline-flex; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: var(--radius-lg); background: color-mix(in oklab, var(--primary) 14%, transparent); color: var(--primary); margin-bottom: 0.875rem; }
+.lg-otp { display: flex; gap: 0.5rem; }
+.lg-otp__in { width: 100%; height: 52px; text-align: center; font-size: 1.25rem; font-weight: 600; font-family: var(--font-mono); border: 1px solid var(--input); border-radius: var(--radius-md); background: var(--background); color: var(--foreground); outline: none; transition: border-color .12s, box-shadow .12s; }
+.lg-otp__in:focus { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 30%, transparent); }
+
+@media (max-width: 860px) {
+  .lg-wrap { grid-template-columns: 1fr; }
+  .lg-brand { display: none; }
+  .lg-logo--m { display: flex; }
+}
+
+/* ============================================================================
+   e-Xabar — Skanlar / Xabarnomalar / Audit
+   ============================================================================ */
+/* running scan progress */
+.exa-scan-running { background: color-mix(in oklab, var(--primary) 6%, var(--card)); }
+.exa-progress { height: 7px; background: var(--muted); border-radius: 999px; overflow: hidden; }
+.exa-progress__bar { display: block; height: 100%; background: var(--primary); border-radius: 999px; transition: width .35s ease; }
+.exa-progress__lbl { font-size: 0.6875rem; color: var(--muted-foreground); font-family: var(--font-mono); margin-top: 4px; display: inline-block; }
+.exa-pulse { width: 7px; height: 7px; border-radius: 999px; background: currentColor; margin-right: 5px; animation: exa-pulse 1.1s ease-in-out infinite; }
+@keyframes exa-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* count pills (notifications) */
+.exa-pill { font-size: 0.6875rem; font-weight: 700; font-family: var(--font-mono); padding: 2px 7px; border-radius: 999px; }
+
+/* audit timeline */
+.exa-audit-group { padding: 0.5rem 1.5rem; }
+.exa-audit-date { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); padding: 0.5rem 0; position: sticky; top: 0; }
+.exa-audit { display: flex; align-items: flex-start; gap: 0.875rem; padding: 0.625rem 0; border-bottom: 1px solid var(--border); }
+.exa-audit:last-child { border-bottom: none; }
+.exa-audit__ico { display: inline-flex; width: 30px; height: 30px; align-items: center; justify-content: center; border-radius: 999px; flex: none; background: var(--muted); color: var(--muted-foreground); }
+.exa-audit__ico--info { color: var(--sev-l); background: color-mix(in oklab, var(--sev-l) 14%, transparent); }
+.exa-audit__ico--new { color: var(--kev); background: color-mix(in oklab, var(--kev) 14%, transparent); }
+.exa-audit__ico--warn { color: var(--sev-h); background: color-mix(in oklab, var(--sev-h) 15%, transparent); }
+.exa-audit__ico--crit { color: var(--sev-c); background: color-mix(in oklab, var(--sev-c) 14%, transparent); }
+.exa-audit__main { flex: 1; min-width: 0; }
+.exa-audit__line { font-size: 0.8125rem; }
+.exa-audit__detail { font-size: 0.75rem; color: var(--muted-foreground); margin-top: 2px; }
+.exa-audit__meta { text-align: right; flex: none; }
+.exa-audit__time { font-size: 0.8125rem; font-weight: 600; font-family: var(--font-mono); display: block; }
+.exa-audit__ip { font-size: 0.6875rem; color: var(--muted-foreground); font-family: var(--font-mono); }
+
+/* ============================================================================
+   e-Xabar — CVE bazasi drawer
+   ============================================================================ */
+.exa-kevbanner { display: flex; align-items: center; gap: 0.75rem; background: color-mix(in oklab, var(--kev) 12%, transparent); border: 1px solid color-mix(in oklab, var(--kev) 30%, transparent); border-radius: var(--radius-md); padding: 0.75rem 0.875rem; color: var(--kev); }
+.exa-kevbanner b { display: block; font-size: 0.8125rem; }
+.exa-kevbanner span { display: block; font-size: 0.6875rem; color: var(--muted-foreground); margin-top: 1px; }
+.exa-patched { display: flex; flex-direction: column; gap: 4px; }
+.exa-patched__row { display: flex; align-items: center; gap: 0.5rem; background: var(--muted); border-radius: var(--radius-sm); padding: 0.375rem 0.625rem; }
+.exa-patched__d { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted-foreground); min-width: 64px; }
+.exa-patched__v { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: oklch(0.64 0.15 155); }
+.exa-refs { display: flex; flex-direction: column; gap: 6px; }
+.exa-ref { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--sev-l); text-decoration: none; padding: 0.4375rem 0.625rem; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.exa-ref:hover { background: var(--accent); }
+
+/* ============================================================================
+   e-Xabar — Foydalanuvchilar (RBAC)
+   ============================================================================ */
+.exa-roles { display: flex; flex-wrap: wrap; gap: 4px; }
+.exa-rolebadge { font-size: 0.6875rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.exa-2fa { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; font-weight: 500; }
+.exa-2fa--on { color: oklch(0.64 0.15 155); }
+.exa-2fa--off { color: var(--muted-foreground); }
+.exa-you { font-size: 0.625rem; font-weight: 700; color: var(--primary-foreground); background: var(--primary); padding: 1px 6px; border-radius: 999px; }
+.exa-rolepick { display: flex; flex-direction: column; gap: 6px; }
+.exa-rolepick__btn { display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: var(--card); border-radius: var(--radius-md); padding: 0.5rem 0.625rem; cursor: pointer; text-align: left; }
+.exa-rolepick__btn:hover { background: var(--accent); }
+.exa-rolepick__btn.is-active { border-color: color-mix(in oklab, var(--primary) 45%, var(--border)); background: color-mix(in oklab, var(--primary) 6%, var(--card)); }
+
+/* ============================================================================
+   e-Xabar — sayqallangan dialoglar (asset qo'shish, suppression)
+   ============================================================================ */
+.exa-dialog-scroll { max-height: 58vh; overflow-y: auto; margin: 0 -4px; padding: 4px; }
+.exa-globalnote { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8125rem; line-height: 1.5; color: var(--sev-h); background: color-mix(in oklab, var(--sev-h) 12%, transparent); border: 1px solid color-mix(in oklab, var(--sev-h) 28%, transparent); border-radius: var(--radius-md); padding: 0.625rem 0.75rem; }
+.exa-globalnote .lucide-icon { flex: none; margin-top: 1px; }
+.exa-supprev { background: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.75rem 0.875rem; }
+.exa-supprev__head { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-foreground); display: flex; align-items: center; gap: 0.375rem; margin-bottom: 0.5rem; }
+.exa-supprev__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: 0.8125rem; padding: 0.25rem 0; }
+.exa-supprev__row span { color: var(--muted-foreground); }
