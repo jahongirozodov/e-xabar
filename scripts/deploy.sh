@@ -35,11 +35,21 @@ npm run build
 
 echo "==> PM2 (web + worker + scheduler)"
 if pm2 describe exabar-web >/dev/null 2>&1; then
-  pm2 reload ecosystem.config.js
+  # --update-env: ecosystem dagi PORT/env o'zgarishlari ham qo'llanadi.
+  pm2 reload ecosystem.config.js --update-env
 else
   pm2 start ecosystem.config.js
-  pm2 save
   echo "AVTO-START uchun bir marta: pm2 startup systemd  (chiqgan buyruqni sudo bilan bajaring)"
+fi
+pm2 save
+
+# Nginx reverse-proxy portini app porti (3001) bilan moslash (mavjud bo'lsa).
+if command -v nginx >/dev/null 2>&1 && [ -f /etc/nginx/sites-available/exabar ]; then
+  if ! grep -q "127.0.0.1:3001" /etc/nginx/sites-available/exabar; then
+    echo "==> Nginx portni 3001 ga moslash"
+    sudo sed -i -E 's#127\.0\.0\.1:[0-9]+#127.0.0.1:3001#' /etc/nginx/sites-available/exabar
+    sudo nginx -t && sudo systemctl reload nginx
+  fi
 fi
 
 pm2 status
