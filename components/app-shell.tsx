@@ -71,7 +71,7 @@ export function AppShell({
           user={{ name: user.name, email: user.email, initials: user.initials }}
         />
         <main className="flex-1 overflow-y-auto">
-          <div className="mx-auto w-full max-w-[1400px] p-5">
+          <div className="w-full p-5">
             <div className="mb-5">
               <h1 className="text-2xl font-bold tracking-tight">{meta.title}</h1>
               {meta.sub && <p className="text-sm text-muted-foreground">{meta.sub}</p>}
