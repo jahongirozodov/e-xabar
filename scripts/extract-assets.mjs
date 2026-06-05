@@ -86,6 +86,7 @@ async function main() {
       groups.set(key, {
         stuff: {
           fullName: stuff.fullName ?? null,
+          organizationName: stuff.subject?.name ?? null,
           emails: Array.isArray(stuff.emails) ? [...stuff.emails] : [],
           objects: [],
         },
