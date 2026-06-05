@@ -18,10 +18,10 @@ const int = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 // ---- ma'lumot havzalari ----
 const EMPLOYEES = [
-  { fullName: "Ivan Ivanov Ivanovich", email: "ivan@gmail.uz", position: "Axborot xavfsizligi departamenti direktori" },
-  { fullName: "Aziz Karimov Akmalovich", email: "aziz.karimov@mail.uz", position: "Tizim administratori" },
-  { fullName: "Dilnoza Yusupova Baxtiyorovna", email: "dilnoza.y@corp.uz", position: "Kiberxavfsizlik mutaxassisi" },
-  { fullName: "Petr Petrov", email: "petr.petrov@inbox.uz", position: "Tarmoq muhandisi" },
+  { fullName: "Ivan Ivanov Ivanovich", email: "ivan@gmail.uz", position: "Axborot xavfsizligi departamenti direktori", org: "Uztelecom" },
+  { fullName: "Aziz Karimov Akmalovich", email: "aziz.karimov@mail.uz", position: "Tizim administratori", org: "Kapital bank" },
+  { fullName: "Dilnoza Yusupova Baxtiyorovna", email: "dilnoza.y@corp.uz", position: "Kiberxavfsizlik mutaxassisi", org: "Markaziy bank" },
+  { fullName: "Petr Petrov", email: "petr.petrov@inbox.uz", position: "Tarmoq muhandisi", org: "Soliq qo'mitasi" },
 ];
 
 const OBJECTS = [
@@ -85,6 +85,7 @@ function buildEntry(objName, emp) {
       id: cryptoId(),
       fullName: emp.fullName,
       position: { id: cryptoId(), name: emp.position },
+      subject: { name: emp.org },
       emails: [emp.email],
       phones: [`+998(${int(70, 99)})-${int(100, 999)}-${int(10, 99)}-${int(10, 99)}`],
     },
