@@ -30,16 +30,14 @@ function getTransport(): Transporter | null {
   const host = process.env.SMTP_HOST
   if (!host) return null
   const port = Number(process.env.SMTP_PORT ?? 587)
+  const isSecure = port === 465
   cached = nodemailer.createTransport({
     host,
     port,
-    secure: port === 465,
+    secure: isSecure,
+    requireTLS: !isSecure,
     auth: process.env.SMTP_USER
-      ? {
-          type: "LOGIN",
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASSWORD ?? "",
-        }
+      ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD ?? "" }
       : undefined,
     tls: { rejectUnauthorized: process.env.SMTP_TLS_REJECT_UNAUTHORIZED !== "false" },
   })
