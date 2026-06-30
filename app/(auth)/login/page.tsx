@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth/auth"
 import { LoginView } from "@/components/auth/login-view"
 
 export const metadata: Metadata = {
-  title: "Kirish — e-Xabar",
+  title: "Kirish — OGOH MAI",
 }
 
 export default async function LoginPage() {

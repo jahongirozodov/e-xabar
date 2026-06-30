@@ -4,10 +4,10 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
-# e-Xabar — loyiha qoidalari (CONVENTIONS)
+# OGOH MAI — loyiha qoidalari (CONVENTIONS)
 
 CVE monitoring tizimi. Til: **o'zbek (lotin)**, turlangan apostrof `ʻ`. Mavzu: dark default.
-Spec: `README.md`, `e-Xabar_Development_Roadmap.md` (Faza 0–12), `e-Xabar - Claude Code Promtlari.md` (UI P0–P17). Dizayn manbasi: `design_reference/*.jsx`+`app.css` (ko'chirma EMAS — shadcn'da qayta yoz).
+Spec: `README.md`, `OGOH-MAI_Development_Roadmap.md` (Faza 0–12), `OGOH-MAI - Claude Code Promtlari.md` (UI P0–P17). Dizayn manbasi: `design_reference/*.jsx`+`app.css` (ko'chirma EMAS — shadcn'da qayta yoz).
 
 ## Stack (pinlangan — o'zgartirma)
 - **Next 16** (App Router, Turbopack) + React 19 + Tailwind v4 + shadcn (zinc, New York).

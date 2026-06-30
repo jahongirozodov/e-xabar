@@ -1,9 +1,9 @@
-// PM2 process config — e-Xabar (web + worker + scheduler).
+// PM2 process config — OGOH MAI (web + worker + scheduler).
 // Ishlatish: pm2 start ecosystem.config.js
 module.exports = {
   apps: [
     {
-      name: "exabar-web",
+      name: "ogoh-mai-web",
       script: "npm",
       args: "run start",
       cwd: __dirname,
@@ -12,7 +12,7 @@ module.exports = {
       autorestart: true,
     },
     {
-      name: "exabar-worker",
+      name: "ogoh-mai-worker",
       script: "npm",
       args: "run worker",
       cwd: __dirname,

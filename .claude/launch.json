@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "exabar",
+      "name": "ogoh-mai",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start", "--", "-p", "3001"],
       "port": 3001,

@@ -41,7 +41,7 @@ export async function startTotpEnroll(): Promise<{ secret: string; otpauth: stri
   const id = await meId()
   const u = await prisma.user.findUniqueOrThrow({ where: { id } })
   const secret = authenticator.generateSecret()
-  const otpauth = authenticator.keyuri(u.email, "e-Xabar", secret)
+  const otpauth = authenticator.keyuri(u.email, "OGOH MAI", secret)
   return { secret, otpauth }
 }
 

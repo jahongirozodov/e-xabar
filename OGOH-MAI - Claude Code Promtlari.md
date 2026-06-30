@@ -1,8 +1,8 @@
-# e-Xabar — Claude Code Promtlari (Next.js + shadcn/ui)
+# OGOH MAI — Claude Code Promtlari (Next.js + shadcn/ui)
 
-> UI prototip (`e-Xabar Dashboard.html`) asosida haqiqiy ilovani qurish uchun
+> UI prototip (`OGOH MAI Dashboard.html`) asosida haqiqiy ilovani qurish uchun
 > bosqichma-bosqich promtlar. Har bir promtni alohida sessiyada Claude Code'ga bering.
-> Ma'lumot modeli uchun `e-Xabar_Development_Roadmap.md` (Prisma schema) manba bo'ladi.
+> Ma'lumot modeli uchun `OGOH MAI_Development_Roadmap.md` (Prisma schema) manba bo'ladi.
 
 ## Qanday foydalanish
 1. Promtlarni **ketma-ket** bering — har biri oldingisiga tayanadi.
@@ -15,7 +15,7 @@
 ## P0 — Loyiha skeleti va shadcn
 
 ```
-KONTEKST: "e-Xabar" CVE monitoring tizimi UI'sini quryapman. Next.js 14
+KONTEKST: "OGOH MAI" CVE monitoring tizimi UI'sini quryapman. Next.js 14
 App Router, TypeScript, Tailwind, shadcn/ui (New York uslubi, zinc bazaviy rang).
 Interfeys tili — o'zbek (lotin). Standart mavzu — DARK.
 
@@ -41,7 +41,7 @@ NATIJA: bo'sh sahifa dark mode'da ochiladi, shadcn <Button> ko'rinadi.
 ## P1 — Dizayn tokenlari (severity palitra)
 
 ```
-KONTEKST: e-Xabar UI. Zinc bazaviy tema ustiga xavfsizlik darajalari uchun
+KONTEKST: OGOH MAI UI. Zinc bazaviy tema ustiga xavfsizlik darajalari uchun
 maxsus ranglar kerak.
 
 VAZIFA: globals.css ga severity CSS o'zgaruvchilarini qo'sh (light + dark).
@@ -63,7 +63,7 @@ NATIJA: <SeverityBadge sev="CRITICAL" /> to'g'ri rangda chiqadi.
 ## P2 — App layout (sidebar + topbar)
 
 ```
-KONTEKST: e-Xabar himoyalangan layout. Chap sidebar (3 guruh) + sticky topbar.
+KONTEKST: OGOH MAI himoyalangan layout. Chap sidebar (3 guruh) + sticky topbar.
 
 VAZIFA: Dashboard layout'ini qur.
 
@@ -71,7 +71,7 @@ FAYLLAR: app/(dashboard)/layout.tsx, components/app-sidebar.tsx,
 components/app-topbar.tsx, lib/nav.ts
 
 TALABLAR:
-- Sidebar 256px, icon-collapse 64px. Brend: qalqon logosi + "e-Xabar / Kiberxavfsizlik".
+- Sidebar 256px, icon-collapse 64px. Brend: qalqon logosi + "OGOH MAI / Kiberxavfsizlik".
 - 3 nav guruh:
   Monitoring: Dashboard, Vositalar, Topilmalar(badge 342), Triage(badge 28),
     CVE bazasi
@@ -90,7 +90,7 @@ NATIJA: layout barcha sahifalarda ko'rinadi, navigatsiya ishlaydi.
 ## P3 — Umumiy komponentlar (DataTable, Drawer, Charts)
 
 ```
-KONTEKST: e-Xabar bir nechta ekranda jadval, detal paneli va diagrammalardan
+KONTEKST: OGOH MAI bir nechta ekranda jadval, detal paneli va diagrammalardan
 foydalanadi. Ularni bir marta yozib qayta ishlatamiz.
 
 VAZIFA: Umumiy komponentlarni qur.
@@ -114,7 +114,7 @@ NATIJA: Storybook yoki demo sahifada uch komponent ham ishlaydi.
 ## P4 — Dashboard
 
 ```
-KONTEKST: e-Xabar boshqaruv paneli. Zaiflik holatining umumiy ko'rinishi.
+KONTEKST: OGOH MAI boshqaruv paneli. Zaiflik holatining umumiy ko'rinishi.
 
 VAZIFA: Dashboard sahifasini qur.
 
@@ -137,7 +137,7 @@ NATIJA: dashboard prototipga mos ko'rinadi, diagrammalar render bo'ladi.
 ## P5 — Vositalar (inventar)
 
 ```
-KONTEKST: e-Xabar inventari — Asset modeli (Prisma) bilan ishlaydi.
+KONTEKST: OGOH MAI inventari — Asset modeli (Prisma) bilan ishlaydi.
 
 VAZIFA: Vositalar ekranini qur.
 
@@ -163,7 +163,7 @@ NATIJA: vositalar ro'yxati, filtr, drawer, qo'shish dialogi ishlaydi.
 ## P6 — Topilmalar (findings)
 
 ```
-KONTEKST: e-Xabar topilmalari — Finding modeli (asset × CVE moslik).
+KONTEKST: OGOH MAI topilmalari — Finding modeli (asset × CVE moslik).
 
 VAZIFA: Topilmalar ekranini qur.
 
@@ -188,7 +188,7 @@ NATIJA: topilmalar jadvali, filtr, bulk, drawer to'liq ishlaydi.
 ## P7 — Triage (kanban)
 
 ```
-KONTEKST: e-Xabar triage — past ishonchli topilmalarni qo'lda ko'rib chiqish.
+KONTEKST: OGOH MAI triage — past ishonchli topilmalarni qo'lda ko'rib chiqish.
 
 VAZIFA: Triage kanban doskasini qur.
 
@@ -210,7 +210,7 @@ NATIJA: kartalarni ustunlar orasida tortish ishlaydi, holat saqlanadi.
 ## P8 — CVE bazasi (read-only katalog)
 
 ```
-KONTEKST: e-Xabar CVE bilim bazasi — Vulnerability modeli, 6 manbadan yig'iladi.
+KONTEKST: OGOH MAI CVE bilim bazasi — Vulnerability modeli, 6 manbadan yig'iladi.
 
 VAZIFA: CVE bazasi ekranini qur (read-only).
 
@@ -232,7 +232,7 @@ NATIJA: CVE katalogi va boy detal paneli ishlaydi.
 ## P9 — Skanlar
 
 ```
-KONTEKST: e-Xabar skanlari — ScanRun modeli, BullMQ worker'lar.
+KONTEKST: OGOH MAI skanlari — ScanRun modeli, BullMQ worker'lar.
 
 VAZIFA: Skanlar ekranini qur.
 
@@ -254,7 +254,7 @@ NATIJA: skan tarixi + qo'lda ishga tushirish + progress ishlaydi.
 ## P10 — Xabarnomalar
 
 ```
-KONTEKST: e-Xabar xabarnomalari — Notification modeli, yuborilgan emaillar.
+KONTEKST: OGOH MAI xabarnomalari — Notification modeli, yuborilgan emaillar.
 
 VAZIFA: Xabarnomalar ekranini qur.
 
@@ -275,7 +275,7 @@ NATIJA: xabarnomalar tarixi va statistikasi ishlaydi.
 ## P11 — Bostirishlar (suppressions)
 
 ```
-KONTEKST: e-Xabar bostirishlari — Suppression modeli. Har bostirishda muddat MAJBURIY.
+KONTEKST: OGOH MAI bostirishlari — Suppression modeli. Har bostirishda muddat MAJBURIY.
 
 VAZIFA: Bostirishlar ekranini qur.
 
@@ -299,7 +299,7 @@ NATIJA: bostirish qoidalari, moslashuvchan dialog, toggle ishlaydi.
 ## P12 — Hisobotlar
 
 ```
-KONTEKST: e-Xabar hisobotlari — Report modeli, PDF/Excel generatsiya.
+KONTEKST: OGOH MAI hisobotlari — Report modeli, PDF/Excel generatsiya.
 
 VAZIFA: Hisobotlar ekranini qur.
 
@@ -320,7 +320,7 @@ NATIJA: hisobot generatori + ro'yxat ishlaydi.
 ## P13 — Audit jurnali
 
 ```
-KONTEKST: e-Xabar audit — AuditLog modeli, o'zgarmas jurnal.
+KONTEKST: OGOH MAI audit — AuditLog modeli, o'zgarmas jurnal.
 
 VAZIFA: Audit jurnali ekranini qur.
 
@@ -341,7 +341,7 @@ NATIJA: audit tasmasi, guruhlash, filtr ishlaydi.
 ## P14 — Foydalanuvchilar (RBAC)
 
 ```
-KONTEKST: e-Xabar foydalanuvchilari — User + Role + UserRole. Admin bo'limi.
+KONTEKST: OGOH MAI foydalanuvchilari — User + Role + UserRole. Admin bo'limi.
 Rollar: ADMIN, SPECIALIST, SECTION_HEAD, DEPARTMENT_HEAD (bir userda bir nechta).
 
 VAZIFA: Foydalanuvchilar ekranini qur.
@@ -365,7 +365,7 @@ NATIJA: foydalanuvchilar jadvali, ko'p rol, qo'shish dialogi ishlaydi.
 ## P15 — Sozlamalar
 
 ```
-KONTEKST: e-Xabar sozlamalari — SystemSetting (AES shifrlangan) + IntegrationHealth.
+KONTEKST: OGOH MAI sozlamalari — SystemSetting (AES shifrlangan) + IntegrationHealth.
 
 VAZIFA: Sozlamalar ekranini qur (Tabs bilan).
 
@@ -388,7 +388,7 @@ NATIJA: sozlamalar tablari, formalar, integratsiya holati ishlaydi.
 ## P16 — Login + 2FA
 
 ```
-KONTEKST: e-Xabar autentifikatsiya — Auth.js v5, Credentials + otplib TOTP.
+KONTEKST: OGOH MAI autentifikatsiya — Auth.js v5, Credentials + otplib TOTP.
 
 VAZIFA: Login sahifasini qur.
 
@@ -409,7 +409,7 @@ NATIJA: login → 2FA → dashboard oqimi ishlaydi.
 ## P17 — Email shabloni (xabarnoma)
 
 ```
-KONTEKST: e-Xabar xodimga yuboradigan zaiflik ogohlantirishi emaili.
+KONTEKST: OGOH MAI xodimga yuboradigan zaiflik ogohlantirishi emaili.
 React Email + Nodemailer.
 
 VAZIFA: vulnerability-alert email shablonini qur.

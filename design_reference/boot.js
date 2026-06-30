@@ -1,4 +1,4 @@
-/* boot.js — e-Xabar diagnostika qatlami (oddiy JS, Babel'siz).
+/* boot.js — OGOH MAI diagnostika qatlami (oddiy JS, Babel'siz).
    Maqsad: agar biror .jsx fayl yuklanishda/transpilatsiyada xato bersa yoki
    React render bo'lmasa, bo'sh ("qora") ekran o'rniga aniq xato matnini ko'rsatish.
    Bu hech qachon ishlayotgan sahifani buzmaydi — faqat muammo bo'lsa ishga tushadi. */
@@ -34,7 +34,7 @@
           '</p>' +
           '<div id="__exa_diag_body" style="background:#18181b;border:1px solid #27272a;border-radius:10px;' +
           'padding:16px 18px;white-space:pre-wrap;word-break:break-word">' + lines.join('') + '</div>' +
-          '<p style="color:#52525b;margin:18px 0 0;font-size:12px">e-Xabar diagnostika · sahifani qayta yuklab ko\u2019ring</p>' +
+          '<p style="color:#52525b;margin:18px 0 0;font-size:12px">OGOH MAI diagnostika · sahifani qayta yuklab ko\u2019ring</p>' +
         '</div>' +
       '</div>';
   }

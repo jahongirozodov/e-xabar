@@ -136,7 +136,7 @@ button { font-family: inherit; }
 .density-compact .ds-content__head { margin-bottom: 1rem; }
 
 /* ============================================================================
-   e-Xabar — severity tokens + dashboard components
+   OGOH MAI — severity tokens + dashboard components
    ============================================================================ */
 :root {
   --sev-c: oklch(0.58 0.22 25);
@@ -249,7 +249,7 @@ button { font-family: inherit; }
 }
 
 /* ============================================================================
-   e-Xabar — Topilmalar (findings) ekrani
+   OGOH MAI — Topilmalar (findings) ekrani
    ============================================================================ */
 /* severity tag */
 .exa-sevtag { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.6875rem; font-weight: 600; padding: 2px 8px 2px 6px; border-radius: 999px; white-space: nowrap; }
@@ -360,7 +360,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 }
 
 /* ============================================================================
-   e-Xabar — Triage kanban doskasi
+   OGOH MAI — Triage kanban doskasi
    ============================================================================ */
 .exa-tri-hint { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; color: var(--muted-foreground); }
 .exa-board { display: grid; grid-template-columns: repeat(5, minmax(220px, 1fr)); gap: 0.875rem; align-items: start; overflow-x: auto; padding-bottom: 0.5rem; }
@@ -395,7 +395,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 }
 
 /* ============================================================================
-   e-Xabar — Vositalar (assets) ekrani
+   OGOH MAI — Vositalar (assets) ekrani
    ============================================================================ */
 .exa-net-dot { display: inline-block; width: 6px; height: 6px; border-radius: 999px; background: var(--kev); margin-left: 2px; vertical-align: middle; }
 .exa-typetag { font-size: 0.6875rem; font-weight: 600; color: var(--foreground); background: var(--muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: var(--radius-sm); white-space: nowrap; }
@@ -427,7 +427,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 }
 
 /* ============================================================================
-   e-Xabar — Bostirishlar (suppressions) ekrani
+   OGOH MAI — Bostirishlar (suppressions) ekrani
    ============================================================================ */
 .exa-supstats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .exa-supstat { display: flex; align-items: center; gap: 0.875rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 1rem 1.25rem; box-shadow: var(--shadow-sm); }
@@ -450,7 +450,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 }
 
 /* ============================================================================
-   e-Xabar — Hisobotlar + Sozlamalar
+   OGOH MAI — Hisobotlar + Sozlamalar
    ============================================================================ */
 @keyframes exa-spin { to { transform: rotate(360deg); } }
 .exa-spin { animation: exa-spin 0.8s linear infinite; }
@@ -464,7 +464,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 .exa-enc { display: inline-flex; align-items: center; gap: 0.4375rem; font-size: 0.8125rem; color: oklch(0.64 0.15 155); background: color-mix(in oklab, oklch(0.64 0.15 155) 12%, transparent); padding: 0.4375rem 0.75rem; border-radius: var(--radius-md); }
 
 /* ============================================================================
-   e-Xabar — Login + 2FA
+   OGOH MAI — Login + 2FA
    ============================================================================ */
 .lg-wrap { display: grid; grid-template-columns: 1.05fr 1fr; min-height: 100vh; }
 .lg-brand { position: relative; background: var(--sidebar); color: var(--sidebar-foreground); border-right: 1px solid var(--sidebar-border); display: flex; flex-direction: column; justify-content: space-between; padding: 2.5rem; overflow: hidden; }
@@ -506,7 +506,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 }
 
 /* ============================================================================
-   e-Xabar — Skanlar / Xabarnomalar / Audit
+   OGOH MAI — Skanlar / Xabarnomalar / Audit
    ============================================================================ */
 /* running scan progress */
 .exa-scan-running { background: color-mix(in oklab, var(--primary) 6%, var(--card)); }
@@ -537,7 +537,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 .exa-audit__ip { font-size: 0.6875rem; color: var(--muted-foreground); font-family: var(--font-mono); }
 
 /* ============================================================================
-   e-Xabar — CVE bazasi drawer
+   OGOH MAI — CVE bazasi drawer
    ============================================================================ */
 .exa-kevbanner { display: flex; align-items: center; gap: 0.75rem; background: color-mix(in oklab, var(--kev) 12%, transparent); border: 1px solid color-mix(in oklab, var(--kev) 30%, transparent); border-radius: var(--radius-md); padding: 0.75rem 0.875rem; color: var(--kev); }
 .exa-kevbanner b { display: block; font-size: 0.8125rem; }
@@ -551,7 +551,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 .exa-ref:hover { background: var(--accent); }
 
 /* ============================================================================
-   e-Xabar — Foydalanuvchilar (RBAC)
+   OGOH MAI — Foydalanuvchilar (RBAC)
    ============================================================================ */
 .exa-roles { display: flex; flex-wrap: wrap; gap: 4px; }
 .exa-rolebadge { font-size: 0.6875rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
@@ -565,7 +565,7 @@ th:hover .exa-sorth__ic { opacity: 0.4; }
 .exa-rolepick__btn.is-active { border-color: color-mix(in oklab, var(--primary) 45%, var(--border)); background: color-mix(in oklab, var(--primary) 6%, var(--card)); }
 
 /* ============================================================================
-   e-Xabar — sayqallangan dialoglar (asset qo'shish, suppression)
+   OGOH MAI — sayqallangan dialoglar (asset qo'shish, suppression)
    ============================================================================ */
 .exa-dialog-scroll { max-height: 58vh; overflow-y: auto; margin: 0 -4px; padding: 4px; }
 .exa-globalnote { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8125rem; line-height: 1.5; color: var(--sev-h); background: color-mix(in oklab, var(--sev-h) 12%, transparent); border: 1px solid color-mix(in oklab, var(--sev-h) 28%, transparent); border-radius: var(--radius-md); padding: 0.625rem 0.75rem; }

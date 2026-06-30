@@ -1,4 +1,4 @@
-# e-Xabar — Ubuntu serverga deploy qo'llanmasi
+# OGOH MAI — Ubuntu serverga deploy qo'llanmasi
 
 Ubuntu 22.04 / 24.04 LTS uchun. Stack: **Next.js 16 + Prisma 6 + PostgreSQL 16 + Redis 7 + BullMQ workerlar**.
 
@@ -20,9 +20,9 @@ sudo apt install -y curl git build-essential ufw
 
 Foydalanuvchi (root'da ishlatmang):
 ```bash
-sudo adduser exabar
-sudo usermod -aG sudo exabar
-su - exabar
+sudo adduser ogoh-mai
+sudo usermod -aG sudo ogoh-mai
+su - ogoh-mai
 ```
 
 ---
@@ -47,9 +47,9 @@ sudo systemctl enable --now postgresql
 DB + user:
 ```bash
 sudo -u postgres psql <<'SQL'
-CREATE USER exabar WITH PASSWORD 'KUCHLI_PAROL';
-CREATE DATABASE exabar OWNER exabar;
-GRANT ALL PRIVILEGES ON DATABASE exabar TO exabar;
+CREATE USER ogoh-mai WITH PASSWORD 'KUCHLI_PAROL';
+CREATE DATABASE ogoh-mai OWNER ogoh-mai;
+GRANT ALL PRIVILEGES ON DATABASE ogoh-mai TO ogoh-mai;
 SQL
 ```
 
@@ -70,10 +70,10 @@ redis-cli ping   # PONG
 ## 4. Loyihani joylash
 
 ```bash
-sudo mkdir -p /var/www && sudo chown exabar:exabar /var/www
+sudo mkdir -p /var/www && sudo chown ogoh-mai:ogoh-mai /var/www
 cd /var/www
-git clone <REPO_URL> exabar
-cd exabar
+git clone <REPO_URL> ogoh-mai
+cd ogoh-mai
 ```
 
 `.npmrc` da `legacy-peer-deps=true` bor (React 19 peers). Barcha paketlar (devDeps ham — workerlar `tsx` ishlatadi):
@@ -88,7 +88,7 @@ npm install
 `.env` (Prisma CLI + runtime):
 ```bash
 cat > .env <<'ENV'
-DATABASE_URL="postgresql://exabar:KUCHLI_PAROL@localhost:5432/exabar?schema=public"
+DATABASE_URL="postgresql://ogoh-mai:KUCHLI_PAROL@localhost:5432/ogoh-mai?schema=public"
 REDIS_URL="redis://localhost:6379"
 ENV
 ```
@@ -97,7 +97,7 @@ ENV
 ```bash
 cat > .env.local <<'ENV'
 AUTH_SECRET="<openssl rand -base64 32>"
-AUTH_URL="https://exabar.example.uz"
+AUTH_URL="https://ogoh-mai.example.uz"
 AUTH_TRUST_HOST="true"
 ENCRYPTION_KEY="<node -e crypto.randomBytes(32).hex>"
 
@@ -108,7 +108,7 @@ SMTP_HOST="smtp-relay.gmail.com"
 SMTP_PORT="587"
 SMTP_USER="<gmail>"
 SMTP_PASSWORD="<app password>"
-SMTP_FROM="security@exabar.example.uz"
+SMTP_FROM="security@ogoh-mai.example.uz"
 ENV
 ```
 
@@ -159,8 +159,8 @@ sudo npm install -g pm2
 ```js
 module.exports = {
   apps: [
-    { name: "exabar-web",    script: "npm", args: "run start", cwd: "/var/www/exabar", env: { PORT: 3001 } },
-    { name: "exabar-worker", script: "npm", args: "run worker", cwd: "/var/www/exabar" },
+    { name: "ogoh-mai-web",    script: "npm", args: "run start", cwd: "/var/www/ogoh-mai", env: { PORT: 3001 } },
+    { name: "ogoh-mai-worker", script: "npm", args: "run worker", cwd: "/var/www/ogoh-mai" },
     // scheduler PM2 daemon EMAS — bir martalik (npm run scheduler) repeatable joblarni Redis'ga yozadi.
   ],
 }
@@ -184,11 +184,11 @@ pm2 status
 sudo apt install -y nginx
 ```
 
-`/etc/nginx/sites-available/exabar`:
+`/etc/nginx/sites-available/ogoh-mai`:
 ```nginx
 server {
     listen 80;
-    server_name exabar.example.uz;
+    server_name ogoh-mai.example.uz;
 
     client_max_body_size 20M;   # JSON import / fayl yuklash uchun
 
@@ -207,14 +207,14 @@ server {
 ```
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/exabar /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/ogoh-mai /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
 TLS (Let's Encrypt):
 ```bash
 sudo apt install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d exabar.example.uz
+sudo certbot --nginx -d ogoh-mai.example.uz
 ```
 
 ---
@@ -234,19 +234,19 @@ Postgres/Redis tashqariga ochilmasin (default localhost) — port 5432/6379 ni U
 ## 11. Yangilash (redeploy)
 
 ```bash
-cd /var/www/exabar
+cd /var/www/ogoh-mai
 git pull
 npm install
 npx prisma migrate deploy
 npm run build
-pm2 reload exabar-web exabar-worker exabar-scheduler
+pm2 reload ogoh-mai-web ogoh-mai-worker ogoh-mai-scheduler
 ```
 
 ---
 
 ## 12. Tekshirish ro'yxati
 
-- [ ] `https://exabar.example.uz/login` → 200, login karta
+- [ ] `https://ogoh-mai.example.uz/login` → 200, login karta
 - [ ] Admin kirish → `/dashboard`
 - [ ] Seed parol o'zgartirildi / yangi admin
 - [ ] `pm2 status` → web/worker/scheduler **online**
@@ -262,7 +262,7 @@ pm2 reload exabar-web exabar-worker exabar-scheduler
 
 ```bash
 # Kunlik DB dump (cron)
-pg_dump -U exabar exabar | gzip > /var/backups/exabar-$(date +\%F).sql.gz
+pg_dump -U ogoh-mai ogoh-mai | gzip > /var/backups/ogoh-mai-$(date +\%F).sql.gz
 ```
 
 `storage/reports/` (PDF/Excel) ham backup qiling.

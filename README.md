@@ -1,6 +1,6 @@
-# Handoff: e-Xabar — Next.js + shadcn/ui + Backend
+# Handoff: OGOH MAI — Next.js + shadcn/ui + Backend
 
-> Bu paket **dizayn manbasidir** — `HTML/React` prototipi e-Xabar CVE monitoring
+> Bu paket **dizayn manbasidir** — `HTML/React` prototipi OGOH MAI CVE monitoring
 > tizimining koʻrinishi va xulq-atvorini koʻrsatadi. Vazifa — shu dizaynni
 > **haqiqiy Next.js 14 (App Router) + TypeScript + shadcn/ui** kod bazasida,
 > backend bilan birga qayta qurish. Prototip kodini toʻgʻridan-toʻgʻri koʻchirib
@@ -10,7 +10,7 @@
 
 ## 1. Umumiy maʼlumot (Overview)
 
-**e-Xabar** — tashkilot xodimlari foydalanadigan dasturiy taʼminotdagi zaifliklarni
+**OGOH MAI** — tashkilot xodimlari foydalanadigan dasturiy taʼminotdagi zaifliklarni
 (CVE) avtomatik aniqlaydigan va tegishli xodimlarga email orqali xabar beradigan
 ichki (internal) kiberxavfsizlik tizimi.
 
@@ -135,7 +135,7 @@ Har ekranning aniq layout va xulqi UI promtlarida (P0–P17) batafsil; manba fay
 
 ## 7. Backend (Data model + API + Jobs)
 
-Toʻliq spetsifikatsiya: **`e-Xabar_Development_Roadmap.md`** (Faza 0–12, Prisma schema,
+Toʻliq spetsifikatsiya: **`OGOH-MAI_Development_Roadmap.md`** (Faza 0–12, Prisma schema,
 server actions, BullMQ worker'lar, env). Qisqacha:
 
 ### Maʼlumot modeli (Prisma — Roadmap §1.1)
@@ -187,11 +187,11 @@ Roadmap §1'da. Zod (`importItemSchema`) bilan validatsiya.
 ### Paketdagi fayllar
 | Fayl | Nima |
 |---|---|
-| `e-Xabar - Claude Code Promtlari.md` | **UI promtlari P0–P17** — har ekranni shadcn'da qurish uchun tayyor promtlar |
-| `e-Xabar_Development_Roadmap.md` | **Backend roadmap** — Prisma schema, server actions, BullMQ, env, Faza 0–12 |
-| `design_reference/e-Xabar Dashboard.html` | Asosiy prototip (13 ekran, dark/light, Tweaks) — brauzerda oching |
-| `design_reference/e-Xabar Login.html` | Login + 2FA prototip |
-| `design_reference/e-Xabar Email.html` | Email shabloni prototip |
+| `OGOH-MAI - Claude Code Promtlari.md` | **UI promtlari P0–P17** — har ekranni shadcn'da qurish uchun tayyor promtlar |
+| `OGOH-MAI_Development_Roadmap.md` | **Backend roadmap** — Prisma schema, server actions, BullMQ, env, Faza 0–12 |
+| `design_reference/OGOH-MAI Dashboard.html` | Asosiy prototip (13 ekran, dark/light, Tweaks) — brauzerda oching |
+| `design_reference/OGOH-MAI Login.html` | Login + 2FA prototip |
+| `design_reference/OGOH-MAI Email.html` | Email shabloni prototip |
 | `design_reference/*.jsx` | Ekran komponentlarining manba kodi (React) — layout va xulq uchun aniq manba |
 | `design_reference/*.css` | `colors_and_type.css`, `components.css`, `app.css` — aniq tokenlar va komponent stillari |
 

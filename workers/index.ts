@@ -7,4 +7,4 @@ import { logger } from "@/lib/utils/logger"
 startScanWorker()
 startVerifyWorker()
 startIngestWorker()
-logger.info("e-Xabar worker'lar ishga tushdi (scan + verify + ingest queue)")
+logger.info("OGOH MAI worker'lar ishga tushdi (scan + verify + ingest queue)")

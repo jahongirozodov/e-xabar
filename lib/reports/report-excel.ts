@@ -20,13 +20,13 @@ function d(x: Date): string {
 
 export async function renderReportExcel(data: ReportData): Promise<Buffer> {
   const wb = new ExcelJS.Workbook()
-  wb.creator = "e-Xabar"
+  wb.creator = "OGOH MAI"
   wb.created = data.generatedAt
 
   // 1) Umumiy
   const ov = wb.addWorksheet("Umumiy")
   ov.columns = [{ width: 28 }, { width: 22 }]
-  ov.addRow(["e-Xabar — Kiberxavfsizlik hisoboti"])
+  ov.addRow(["OGOH MAI — Kiberxavfsizlik hisoboti"])
   ov.getRow(1).font = { bold: true, size: 14 }
   ov.addRow([`${TYPE_LABEL[data.reportType] ?? data.reportType} hisobot`])
   ov.addRow(["Davr", `${d(data.periodStart)} — ${d(data.periodEnd)}`])

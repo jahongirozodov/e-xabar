@@ -49,7 +49,7 @@ export function AppTopbar({
         </Button>
         <div className="mx-1 h-5 w-px bg-border" />
         <nav className="flex items-center gap-1.5 text-sm">
-          <span className="text-muted-foreground">e-Xabar</span>
+          <span className="text-muted-foreground">OGOH MAI</span>
           <ChevronRight className="size-3.5 text-muted-foreground" />
           <span className="font-medium">{title}</span>
         </nav>

@@ -50,7 +50,7 @@ function ReportPdf({ data }: { data: ReportData }) {
     <Document>
       <Page size="A4" style={s.page}>
         <View style={s.header}>
-          <Text style={s.brand}>e-Xabar — Kiberxavfsizlik hisoboti</Text>
+          <Text style={s.brand}>OGOH MAI — Kiberxavfsizlik hisoboti</Text>
           <Text style={s.sub}>
             {TYPE_LABEL[data.reportType] ?? data.reportType} · davr {d(data.periodStart)} — {d(data.periodEnd)} ·
             yaratildi {d(data.generatedAt)}
@@ -121,7 +121,7 @@ function ReportPdf({ data }: { data: ReportData }) {
         ))}
         {data.topAssets.length === 0 && <Text style={{ color: "#a1a1aa", marginTop: 6 }}>Topilma yo&apos;q.</Text>}
 
-        <Text style={s.footer}>e-Xabar · avtomatik hisobot · maxfiy — faqat ichki foydalanish uchun</Text>
+        <Text style={s.footer}>OGOH MAI · avtomatik hisobot · maxfiy — faqat ichki foydalanish uchun</Text>
       </Page>
     </Document>
   )

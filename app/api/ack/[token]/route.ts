@@ -8,7 +8,7 @@ function page(title: string, body: string, ok: boolean) {
 <div style="font-size:40px">${ok ? "✅" : "⚠️"}</div>
 <h1 style="font-size:20px;margin:12px 0 8px">${title}</h1>
 <p style="color:#52525b;font-size:14px;line-height:1.6;margin:0">${body}</p>
-<p style="color:#a1a1aa;font-size:12px;margin-top:24px">e-Xabar · Kiberxavfsizlik markazi</p>
+<p style="color:#a1a1aa;font-size:12px;margin-top:24px">OGOH MAI · Kiberxavfsizlik markazi</p>
 </div></body></html>`
 }
 

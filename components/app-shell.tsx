@@ -28,7 +28,7 @@ export function AppShell({
   const [collapsed, setCollapsed] = React.useState(false)
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const pathname = usePathname()
-  const meta = PAGE_META[pathname] ?? { title: "e-Xabar", sub: "" }
+  const meta = PAGE_META[pathname] ?? { title: "OGOH MAI", sub: "" }
 
   function toggle() {
     if (typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches) {

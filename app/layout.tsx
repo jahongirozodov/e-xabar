@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "e-Xabar — Kiberxavfsizlik monitoringi",
+  title: "OGOH MAI — Kiberxavfsizlik monitoringi",
   description: "Avtomatik CVE zaiflik monitoringi tizimi",
 };
 

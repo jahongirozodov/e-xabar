@@ -1,4 +1,4 @@
-# e-Xabar — Loyihani Ishlab Chiqish Rejasi (Development Roadmap)
+# OGOH MAI — Loyihani Ishlab Chiqish Rejasi (Development Roadmap)
 
 > **Avtomatik kiberzaiflik monitoringi tizimi**
 > Vibe coding uchun bosqichma-bosqich qo'llanma — kod misollari va AI promptlari bilan
@@ -135,7 +135,7 @@ Bularning hammasi bitta kod bazasida, lekin alohida ishga tushadi (PM2 orqali).
 ## 3. LOYIHA STRUKTURASI <a name="3-loyiha-strukturasi"></a>
 
 ```
-e-xabar/
+ogoh-mai/
 ├── app/                              # Next.js App Router
 │   ├── (auth)/
 │   │   └── login/page.tsx            # Login + 2FA
@@ -285,8 +285,8 @@ NATIJA: [nima ishlashi kerak]
 
 #### 0.1. Loyihani yaratish
 ```bash
-npx create-next-app@latest e-xabar --typescript --tailwind --app --eslint --src-dir=false --import-alias="@/*"
-cd e-xabar
+npx create-next-app@latest ogoh-mai --typescript --tailwind --app --eslint --src-dir=false --import-alias="@/*"
+cd ogoh-mai
 ```
 
 #### 0.2. Asosiy paketlarni o'rnatish
@@ -413,7 +413,7 @@ npx prisma init
 
 #### 🤖 Vibe coding prompt (Faza 0)
 ```
-KONTEKST: Men "e-Xabar" nomli CVE monitoring tizimini quryapman.
+KONTEKST: Men "OGOH MAI" nomli CVE monitoring tizimini quryapman.
 Stack: Next.js 14 App Router, TypeScript, Prisma, PostgreSQL, Redis,
 BullMQ, Auth.js v5, shadcn/ui, Tailwind.
 
@@ -1137,7 +1137,7 @@ export function decrypt(data: string): string {
 
 #### 🤖 Vibe coding prompt (Faza 1)
 ```
-KONTEKST: e-Xabar CVE monitoring tizimi. Next.js 14, Prisma, Auth.js v5.
+KONTEKST: OGOH MAI CVE monitoring tizimi. Next.js 14, Prisma, Auth.js v5.
 4 rol bor: ADMIN, SPECIALIST, SECTION_HEAD, DEPARTMENT_HEAD.
 Bir user bir nechta rolga ega bo'lishi mumkin.
 
@@ -1425,7 +1425,7 @@ Import UI: fayl yuklash (drag-drop) yoki JSON paste → natija (qancha qo'shildi
 
 #### 🤖 Vibe coding prompt (Faza 2)
 ```
-KONTEKST: e-Xabar. Next.js 14 Server Actions, Prisma, shadcn/ui.
+KONTEKST: OGOH MAI. Next.js 14 Server Actions, Prisma, shadcn/ui.
 Inventar: passiv xodimlar (employees) + vositalar (assets) + bog'lanish.
 
 VAZIFA: Inventar boshqaruvini qur — CRUD + JSON import.
@@ -1706,7 +1706,7 @@ async function upsertVulnerability(v: NormalizedVulnerability) {
 
 #### 🤖 Vibe coding prompt (Faza 3)
 ```
-KONTEKST: e-Xabar. CVE ma'lumotlarini 6 manbadan yig'ish kerak:
+KONTEKST: OGOH MAI. CVE ma'lumotlarini 6 manbadan yig'ish kerak:
 NVD, OSV, GHSA, CISA KEV, Ubuntu USN, Debian DSA, RHEL OVAL.
 
 VAZIFA: Adapter pattern bilan CVE ingestion pipeline qur.
@@ -1909,7 +1909,7 @@ async function checkDistroPatched(
 
 #### 🤖 Vibe coding prompt (Faza 4)
 ```
-KONTEKST: e-Xabar. Asset (vosita) ↔ CVE moslashtirish kerak.
+KONTEKST: OGOH MAI. Asset (vosita) ↔ CVE moslashtirish kerak.
 Asset'da purl, cpe, version bor. CVE'da affectedVersions bor.
 
 VAZIFA: Matching engine qur.
@@ -2084,7 +2084,7 @@ function matchesAttrFilter(asset: any, filter: any): boolean {
 
 #### 🤖 Vibe coding prompt (Faza 5)
 ```
-KONTEKST: e-Xabar. False positive kamaytirish uchun confidence score kerak.
+KONTEKST: OGOH MAI. False positive kamaytirish uchun confidence score kerak.
 
 VAZIFA: 6 qatlamli FP boshqaruvini qur.
 
@@ -2254,7 +2254,7 @@ export async function triageFinding(
 
 #### 🤖 Vibe coding prompt (Faza 6)
 ```
-KONTEKST: e-Xabar. Findinglar (asset+CVE) triage qilinishi kerak.
+KONTEKST: OGOH MAI. Findinglar (asset+CVE) triage qilinishi kerak.
 Status workflow: NEW → PENDING_REVIEW → APPLICABLE/NOT_APPLICABLE/...
 
 VAZIFA: Triage workflow va suppression boshqaruvini qur.
@@ -2484,7 +2484,7 @@ export async function buildNotificationForEmployee(
     data: {
       employeeId,
       scanRunId,
-      emailSubject: `[e-Xabar] ${findings.length} ta zaiflik aniqlandi (${criticalCount} Critical)`,
+      emailSubject: `[OGOH MAI] ${findings.length} ta zaiflik aniqlandi (${criticalCount} Critical)`,
       findingsCount: findings.length,
       findingsCriticalCount: criticalCount,
       findingsHighCount: highCount,
@@ -2608,7 +2608,7 @@ function htmlResponse(message: string) {
 
 #### 🤖 Vibe coding prompt (Faza 7)
 ```
-KONTEKST: e-Xabar. Xodimga email yuborish kerak — JADVAL shaklida.
+KONTEKST: OGOH MAI. Xodimga email yuborish kerak — JADVAL shaklida.
 Email login talab qilmaydi (token-based havolalar).
 
 VAZIFA: Email notification tizimini qur.
@@ -2873,7 +2873,7 @@ npm run worker
 
 #### 🤖 Vibe coding prompt (Faza 8)
 ```
-KONTEKST: e-Xabar. Davriy ishlar BullMQ worker'larda bo'lishi kerak.
+KONTEKST: OGOH MAI. Davriy ishlar BullMQ worker'larda bo'lishi kerak.
 Worker'lar Next.js'dan alohida process'da ishlaydi.
 
 VAZIFA: BullMQ job tizimini qur.
@@ -2959,7 +2959,7 @@ async function getDashboardData() {
 
 #### 🤖 Vibe coding prompt (Faza 9)
 ```
-KONTEKST: e-Xabar. Dashboard va hisobotlar kerak.
+KONTEKST: OGOH MAI. Dashboard va hisobotlar kerak.
 
 VAZIFA: Dashboard + reporting qur.
 
@@ -3060,7 +3060,7 @@ import QRCode from 'qrcode'
 
 // Setup boshlanishi
 const secret = authenticator.generateSecret()
-const uri = authenticator.keyuri(user.email, 'e-Xabar', secret)
+const uri = authenticator.keyuri(user.email, 'OGOH MAI', secret)
 const qrDataUrl = await QRCode.toDataURL(uri)
 // User QR ni skanlaydi, kod kiritadi → tasdiqlash → totpEnabled=true
 ```
@@ -3075,7 +3075,7 @@ const qrDataUrl = await QRCode.toDataURL(uri)
 
 #### 🤖 Vibe coding prompt (Faza 10)
 ```
-KONTEKST: e-Xabar. Admin foydalanuvchilar + sozlamalarni boshqaradi.
+KONTEKST: OGOH MAI. Admin foydalanuvchilar + sozlamalarni boshqaradi.
 
 VAZIFA: Admin panel qur.
 
@@ -3199,7 +3199,7 @@ export async function GET() {
 
 #### 🤖 Vibe coding prompt (Faza 11)
 ```
-KONTEKST: e-Xabar. Audit log va monitoring kerak.
+KONTEKST: OGOH MAI. Audit log va monitoring kerak.
 
 VAZIFA: Audit + health/metrics qur.
 
@@ -3371,7 +3371,7 @@ server {
 
 #### 🤖 Vibe coding prompt (Faza 12)
 ```
-KONTEKST: e-Xabar. Testlar va production deployment kerak.
+KONTEKST: OGOH MAI. Testlar va production deployment kerak.
 
 VAZIFA: Test + deploy sozlash.
 
@@ -3511,14 +3511,14 @@ Keyin qolgan manbalar (OSV, GHSA, KEV, distro), triage UI, dashboard, admin'ni q
 
 ---
 
-*Ushbu reja "e-Xabar" Texnik topshirig'i (TT.eX-2026.001) asosida tayyorlangan. Har bir faza mustaqil ishlab chiqilishi va sinovdan o'tkazilishi mumkin.*
+*Ushbu reja "OGOH MAI" Texnik topshirig'i (TT.eX-2026.001) asosida tayyorlangan. Har bir faza mustaqil ishlab chiqilishi va sinovdan o'tkazilishi mumkin.*
 ---
 
 <a name="mavjud-loyihani-moslashtirish"></a>
 # 🔧 MAVJUD LOYIHANI MOSLASHTIRISH (studio-admin v2.2.0)
 
 > **MUHIM:** Sizda allaqachon `studio-admin` nomli tayyor admin dashboard loyihasi bor.
-> Quyida bu loyihaga e-Xabar funksionalligini qo'shish bo'yicha aniq yo'riqnoma.
+> Quyida bu loyihaga OGOH MAI funksionalligini qo'shish bo'yicha aniq yo'riqnoma.
 > Bu bo'limni Faza 0 o'rniga bajaring, keyin Faza 1 dan davom eting (moslashtirishlar bilan).
 
 ---
@@ -3551,7 +3551,7 @@ Sizning `package.json` asosida quyidagilar **allaqachon mavjud**:
 | **Linter** | biome (eslint o'rniga) | Husky + lint-staged |
 | **Test** | vitest@4, @testing-library, jsdom | Test stack tayyor |
 
-### ➕ QO'SHISH KERAK (e-Xabar uchun yo'q)
+### ➕ QO'SHISH KERAK (OGOH MAI uchun yo'q)
 
 ```bash
 # Background jobs (CVE skan, email, verification)
@@ -3583,7 +3583,7 @@ npm install -D @types/semver
 npm install pino pino-pretty
 ```
 
-### 🔄 MOSLASHTIRISH (bor, lekin e-Xabar uchun o'zgartirish/sozlash kerak)
+### 🔄 MOSLASHTIRISH (bor, lekin OGOH MAI uchun o'zgartirish/sozlash kerak)
 
 | Narsa | Holat | Nima qilish |
 |-------|-------|-------------|
@@ -3794,7 +3794,7 @@ datasource db {
 
 studio-admin'da tayyor komponentlar bor — ularni qayta yozmang, ishlatib keting:
 
-| e-Xabar funksiyasi | studio-admin'dagi tayyor narsa |
+| OGOH MAI funksiyasi | studio-admin'dagi tayyor narsa |
 |--------------------|-------------------------------|
 | Findings/Assets jadvallari | `@tanstack/react-table` + mavjud DataTable komponenti |
 | **Triage kanban** | **`@dnd-kit/*`** (drag-drop tayyor!) — kanban uchun ideal |
@@ -3817,7 +3817,7 @@ studio-admin'da quyidagilar tayyor bo'lishi mumkin (loyihani oching va ko'ring):
 - Login sahifasi (ehtimol)
 - Theme switcher
 
-**Strategiya:** Mavjud sahifalarni e-Xabar uchun **moslashtiring** (rename + content o'zgartirish), yangidan yozmang.
+**Strategiya:** Mavjud sahifalarni OGOH MAI uchun **moslashtiring** (rename + content o'zgartirish), yangidan yozmang.
 
 ---
 
@@ -3860,7 +3860,7 @@ Faza 2-12: Asosiy rejadagidek davom etadi
 
 ```
 KONTEKST: Menda "studio-admin" nomli tayyor Next.js 16 + React 19 +
-shadcn/ui + Prisma 7 admin dashboard loyihasi bor. Unga e-Xabar
+shadcn/ui + Prisma 7 admin dashboard loyihasi bor. Unga OGOH MAI
 (CVE monitoring) funksionalligini qo'shyapman.
 
 Mavjud: next@16, react@19, prisma@7 (+adapter-pg), shadcn, tailwind@4,
@@ -3870,7 +3870,7 @@ bcryptjs, jose, input-otp, exceljs, zustand, sonner, vitest.
 YO'Q (qo'shish kerak): bullmq, ioredis, nodemailer, react-email,
 @react-pdf/renderer, otplib, qrcode, semver, papaparse, pino.
 
-VAZIFA: Loyihani e-Xabar uchun tayyorlash.
+VAZIFA: Loyihani OGOH MAI uchun tayyorlash.
 
 TALABLAR:
 1. Yangi paketlarni o'rnatish (yuqoridagi YO'Q ro'yxati)
@@ -3895,7 +3895,7 @@ Redis ulanishi ishlasin.
 
 1. **Avval loyihani o'rganing.** `app/`, `components/`, `lib/` papkalarini ochib, nima borligini ko'ring. README bo'lsa o'qing.
 
-2. **Mavjud sahifalarni qayta ishlating.** Agar dashboard, settings, users sahifalari bor bo'lsa — ularni e-Xabar uchun moslang, yangidan yozmang.
+2. **Mavjud sahifalarni qayta ishlating.** Agar dashboard, settings, users sahifalari bor bo'lsa — ularni OGOH MAI uchun moslang, yangidan yozmang.
 
 3. **Biome (eslint emas).** Loyiha biome ishlatadi. `npm run check:fix` bilan kod formatlang.
 
