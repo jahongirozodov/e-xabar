@@ -35,7 +35,11 @@ function getTransport(): Transporter | null {
     port,
     secure: port === 465,
     auth: process.env.SMTP_USER
-      ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD ?? "" }
+      ? {
+          type: "LOGIN",
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASSWORD ?? "",
+        }
       : undefined,
     tls: { rejectUnauthorized: process.env.SMTP_TLS_REJECT_UNAUTHORIZED !== "false" },
   })
