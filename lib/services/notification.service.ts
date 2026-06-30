@@ -74,10 +74,14 @@ export async function generateNotifications(scanRunId?: string): Promise<NotifyR
     const ackToken = crypto.randomBytes(16).toString("hex")
     // Bir xodim ko'p MAI'ga ega bo'lishi mumkin — mavzuda MAI sonini ko'rsatamiz.
     const maiCount = new Set(items.map((i) => i.asset.object?.name ?? "—")).size
+    const sevParts = [
+      crit > 0 ? `${crit} ta kritik` : "",
+      high > 0 ? `${high} ta yuqori` : "",
+    ].filter(Boolean).join(", ")
     const subject =
       `${items.length} ta zaiflik aniqlandi` +
       (maiCount > 1 ? ` — ${maiCount} ta MAI` : "") +
-      (kev ? ` · ${kev} shoshilinch (KEV)` : "")
+      (sevParts ? ` · ${sevParts}` : "")
 
     // Email yuborish (SMTP yo'q bo'lsa simulyatsiya, pipeline davom etadi).
     let emailResult: SendResult = { sent: false, error: "NO_RECIPIENT" }
