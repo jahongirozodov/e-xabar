@@ -1,4 +1,4 @@
-// app.jsx — e-Xabar admin shell (dark default, Uzbek)
+// app.jsx — OGOH MAI admin shell (dark default, Uzbek)
 const { useState: uS, useEffect: uE, useCallback } = React;
 
 const NAV = [

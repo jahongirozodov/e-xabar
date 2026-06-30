@@ -1,4 +1,4 @@
-// Sidebar.jsx — e-Xabar app sidebar (nav groups, collapsible icon mode)
+// Sidebar.jsx — OGOH MAI app sidebar (nav groups, collapsible icon mode)
 function Sidebar({ nav, active, onNavigate, collapsed }) {
   return (
     <aside className={'ds-sidebar' + (collapsed ? ' ds-sidebar--collapsed' : '')}>
@@ -6,7 +6,7 @@ function Sidebar({ nav, active, onNavigate, collapsed }) {
         <div className="ds-brand-mark"><Icon name="shield" size={17} /></div>
         {!collapsed && (
           <div className="ds-brand-text">
-            <div className="ds-brand-name">e-Xabar</div>
+            <div className="ds-brand-name">OGOH MAI</div>
             <div className="ds-brand-plan">Kiberxavfsizlik</div>
           </div>
         )}

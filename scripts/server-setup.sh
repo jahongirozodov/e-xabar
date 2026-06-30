@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# e-Xabar — BIR MARTALIK server infratuzilmasi (Ubuntu 22.04/24.04).
+# OGOH MAI — BIR MARTALIK server infratuzilmasi (Ubuntu 22.04/24.04).
 # Node 20 + PostgreSQL 16 + Redis + Nginx + Certbot + PM2.
 # Ishlatish:  sudo bash scripts/server-setup.sh
 set -euo pipefail

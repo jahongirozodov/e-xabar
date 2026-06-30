@@ -1,4 +1,4 @@
-// findings.jsx — e-Xabar Topilmalar (findings) ekrani: data-table, filtrlar,
+// findings.jsx — OGOH MAI Topilmalar (findings) ekrani: data-table, filtrlar,
 // saralash, bulk amallar, confidence, manba teglari + detal drawer.
 const { useState: fState, useMemo: fMemo, useEffect: fEffect } = React;
 

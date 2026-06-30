@@ -1,4 +1,4 @@
-// login.jsx — e-Xabar tizimga kirish (email + parol → 2FA TOTP).
+// login.jsx — OGOH MAI tizimga kirish (email + parol → 2FA TOTP).
 const { useState: lState, useRef: lRef, useEffect: lEffect } = React;
 
 function Login() {
@@ -33,7 +33,7 @@ function Login() {
     e.preventDefault(); setErr('');
     if (code.join('').length < 6) { setErr('6 xonali kodni kiriting.'); return; }
     setBusy(true);
-    setTimeout(() => { window.location.href = 'e-Xabar Dashboard.html'; }, 800);
+    setTimeout(() => { window.location.href = 'OGOH-MAI Dashboard.html'; }, 800);
   }
 
   return (
@@ -41,7 +41,7 @@ function Login() {
       {/* brand panel */}
       <div className="lg-brand">
         <div className="lg-brand__top">
-          <div className="lg-logo"><div className="ds-brand-mark" style={{ width: 36, height: 36 }}><Icon name="shield" size={20} /></div><span className="lg-logo__name">e-Xabar</span></div>
+          <div className="lg-logo"><div className="ds-brand-mark" style={{ width: 36, height: 36 }}><Icon name="shield" size={20} /></div><span className="lg-logo__name">OGOH MAI</span></div>
         </div>
         <div className="lg-brand__mid">
           <h1 className="lg-tagline">Avtomatik kiberzaiflik monitoringi</h1>
@@ -52,14 +52,14 @@ function Login() {
             <div className="lg-feat"><Icon name="list-checks" size={16} /> False-positive kamaytirish va triage</div>
           </div>
         </div>
-        <div className="lg-brand__foot">© 2026 e-Xabar · Kiberxavfsizlik markazi</div>
+        <div className="lg-brand__foot">© 2026 OGOH MAI · Kiberxavfsizlik markazi</div>
         <div className="lg-grid" aria-hidden="true" />
       </div>
 
       {/* form panel */}
       <div className="lg-formwrap">
         <div className="lg-card">
-          <div className="lg-logo lg-logo--m"><div className="ds-brand-mark" style={{ width: 32, height: 32 }}><Icon name="shield" size={17} /></div><span className="lg-logo__name">e-Xabar</span></div>
+          <div className="lg-logo lg-logo--m"><div className="ds-brand-mark" style={{ width: 32, height: 32 }}><Icon name="shield" size={17} /></div><span className="lg-logo__name">OGOH MAI</span></div>
 
           {step === 'cred' ? (
             <form onSubmit={submitCred} className="lg-form">

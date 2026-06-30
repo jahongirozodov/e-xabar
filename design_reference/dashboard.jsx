@@ -1,4 +1,4 @@
-// dashboard.jsx — e-Xabar boshqaruv paneli (KPIs, charts, top assets, activity)
+// dashboard.jsx — OGOH MAI boshqaruv paneli (KPIs, charts, top assets, activity)
 const { useState: dState } = React;
 
 const SEV = {

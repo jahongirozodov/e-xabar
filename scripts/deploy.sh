@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# e-Xabar — APP deploy / redeploy.
+# OGOH MAI — APP deploy / redeploy.
 # Talab: server-setup.sh bajarilgan + .env va .env.local to'ldirilgan.
 # Ishlatish:  bash scripts/deploy.sh           (oddiy redeploy)
 #             SEED=1 bash scripts/deploy.sh     (birinchi marta — seed bilan)

@@ -1,4 +1,4 @@
-// e-Xabar Prisma schema (Roadmap §1.1).
+// OGOH MAI Prisma schema (Roadmap §1.1).
 // learn more: https://pris.ly/d/prisma-schema
 
 generator client {

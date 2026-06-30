@@ -1,4 +1,4 @@
-// Topbar.jsx — e-Xabar header: sidebar toggle, breadcrumb, search, scan, theme, alerts
+// Topbar.jsx — OGOH MAI header: sidebar toggle, breadcrumb, search, scan, theme, alerts
 function Topbar({ title, onToggleSidebar, onNavigate, theme, onToggleTheme }) {
   return (
     <header className="ds-topbar">
@@ -8,7 +8,7 @@ function Topbar({ title, onToggleSidebar, onNavigate, theme, onToggleTheme }) {
         </button>
         <div className="ds-divider-v" />
         <nav className="ds-breadcrumb">
-          <span className="ds-breadcrumb__muted">e-Xabar</span>
+          <span className="ds-breadcrumb__muted">OGOH MAI</span>
           <Icon name="chevron-right" size={14} style={{ color: 'var(--muted-foreground)' }} />
           <span>{title}</span>
         </nav>
@@ -44,7 +44,7 @@ function Topbar({ title, onToggleSidebar, onNavigate, theme, onToggleTheme }) {
           <MenuItem onClick={() => onNavigate && onNavigate('profile')}><Icon name="users" size={15} /> Profil</MenuItem>
           <MenuItem onClick={() => onNavigate && onNavigate('settings')}><Icon name="settings" size={15} /> Sozlamalar</MenuItem>
           <div className="ds-sep-line" />
-          <MenuItem danger onClick={() => { window.location.href = 'e-Xabar Login.html'; }}><Icon name="log-out" size={15} /> Chiqish</MenuItem>
+          <MenuItem danger onClick={() => { window.location.href = 'OGOH-MAI Login.html'; }}><Icon name="log-out" size={15} /> Chiqish</MenuItem>
         </Menu>
       </div>
     </header>
