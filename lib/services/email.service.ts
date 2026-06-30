@@ -1,7 +1,11 @@
 // NOT server-only — action'lar, worker'lar va notification pipeline ishlatadi.
+import { writeFileSync, unlinkSync } from "fs"
+import { join } from "path"
+import { tmpdir } from "os"
 import nodemailer, { type Transporter } from "nodemailer"
 import { render } from "@react-email/components"
 import { VulnerabilityAlert, type AlertFinding } from "@/emails/vulnerability-alert"
+import { buildNotificationExcel } from "@/lib/reports/notification-excel"
 import { logger } from "@/lib/utils/logger"
 
 export interface SendAlertInput {
@@ -55,16 +59,40 @@ export async function sendAlertEmail(input: SendAlertInput): Promise<SendResult>
     return { sent: false, error: "SMTP_NOT_CONFIGURED", html }
   }
 
+  let tmpPath: string | null = null
   try {
+    const date = new Date().toISOString().slice(0, 10)
+    const safeName = input.employeeName.replace(/\s+/g, "-")
+    let attachments: nodemailer.SendMailOptions["attachments"] = []
+    try {
+      const excelBuf = await buildNotificationExcel(input.employeeName, input.findings)
+      const fname = `zaifliklar-${safeName}-${date}.xlsx`
+      tmpPath = join(tmpdir(), fname)
+      writeFileSync(tmpPath, excelBuf)
+      attachments = [
+        {
+          filename: fname,
+          path: tmpPath,
+          contentType:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        },
+      ]
+    } catch (excelErr) {
+      logger.warn({ err: excelErr }, "Excel biriktirma yaratilmadi — emailsiz yuboriladi")
+    }
+
     await transport.sendMail({
       from: process.env.SMTP_FROM ?? "security@example.uz",
       to: input.to,
       subject: input.subject,
       html,
+      attachments,
     })
+    if (tmpPath) try { unlinkSync(tmpPath) } catch { /* ignore */ }
     logger.info({ to: input.to }, "Ogohlantirish emaili yuborildi")
     return { sent: true, html }
   } catch (e) {
+    if (tmpPath) try { unlinkSync(tmpPath) } catch { /* ignore */ }
     const error = e instanceof Error ? e.message : String(e)
     logger.error({ to: input.to, error }, "Email yuborishda xato")
     return { sent: false, error, html }
